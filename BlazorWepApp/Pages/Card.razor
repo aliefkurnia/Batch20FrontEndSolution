@@ -1,7 +1,7 @@
 ﻿<h3>Card</h3>
 
 <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="..." alt="Card image cap">
+    <img @attributes="AdditionalAttribute" class="card-img-top">
     <div class="card-body">
         <h5 class="card-title">@title</h5>
         <p class="card-text">@description</p>
@@ -10,5 +10,9 @@
 </div>
 
 @code {
+    [Parameter] public string title { get; set; }
+    [Parameter] public string description { get; set; }
+    [Parameter]
+    public Dictionary<String, object>? AdditionalAttribute { get; set; }
 
 }
