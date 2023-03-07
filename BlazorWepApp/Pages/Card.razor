@@ -10,9 +10,9 @@
 </div>
 
 @code {
-    [Parameter] public string title { get; set; }
-    [Parameter] public string description { get; set; }
-    [Parameter]
+    [Parameter] public string? title { get; set; }
+    [Parameter] public string? description { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<String, object>? AdditionalAttribute { get; set; }
 
 }
