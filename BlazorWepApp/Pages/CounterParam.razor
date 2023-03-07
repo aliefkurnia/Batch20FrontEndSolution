@@ -1,0 +1,20 @@
+﻿@page "/counterParam"
+<h3>@title</h3>
+
+@code {
+    [Parameter]
+    public string? title { get; set; }
+
+    protected override void OnInitialized() //?
+    {
+        title = "CSHarp";
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine($"OnParameterSet => Title : {title}");
+        
+                  
+    }
+
+}
