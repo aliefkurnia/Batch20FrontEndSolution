@@ -1,0 +1,54 @@
+﻿@using Realta.Frontend.Pages.Master
+@if (ServiceTask.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr class="align-content-lg-stretch">
+                <th class="min-width">
+                    <h6>ID</h6>
+                </th>
+                <th>
+                    <h6>Task Name</h6>
+                </th>
+                <th>
+                    <h6>Sequence Order</h6>
+                </th>
+                <th>
+                    <h6>Action</h6>
+                </th>
+            </tr>
+            <!-- end table row-->
+        </thead>
+        <tbody>
+            @foreach (var seta in ServiceTask)
+            {
+                <tr>
+                    <td>
+                        <p>@seta.SetaId</p>
+                    </td>
+                    <td>
+                        <p>@seta.SetaName</p>
+                    </td>
+                    <td>
+                        <p>@seta.SetaSeq</p>
+                    </td>
+                    <td>
+                        <button class="more-btn ml-10 dropdown-toggle" title="More" id="moreAction" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="mdi mdi-dots-vertical"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction">
+                            <li class="dropdown-item">
+                                <a class="text-gray" @onclick="() => RedirectToUpdate(seta.SetaId)">Update</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a class="text-danger" @onclick="() => Delete(seta.SetaId)">Delete</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+
