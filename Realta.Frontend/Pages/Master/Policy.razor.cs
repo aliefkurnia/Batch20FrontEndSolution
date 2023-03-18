@@ -56,6 +56,7 @@ namespace Realta.Frontend.Pages.Master
         {
             await PolicyHttp.CreatePolicy(_policyCreateDto);
             _notification.Show("/policy");
+            _policyCreateDto = new();
         }
 
         private async Task DeletePolicy(int id)

@@ -67,6 +67,8 @@ namespace Realta.Frontend.Pages.Master
         {
             await PriceItemsHttp.CreatePriceItems(_priceItemsCreateDto);
             _notification.Show("/priceitems");
+            _priceItemsCreateDto = new PriceItemsCreateDto();
+            await GetPaging();
         }
 
         private async Task deletePriceItems(int id)
@@ -74,6 +76,8 @@ namespace Realta.Frontend.Pages.Master
             await PriceItemsRepository.deletePriceItems(id);
             _priceItemsParameters.PageNumber = 1;
             await GetPaging();
+            _notification.Show("/priceitems");
+
         }
 
     }

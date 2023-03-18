@@ -1,21 +1,25 @@
 ﻿@page "/purchasing/list-order"
+@using Realta.Contract.Models
+@inject NavigationManager NavigationManager
 
 <PageTitle>Purchase Order</PageTitle>
 
 <TableSection Title="Purchase Order" Link="/purchasing" LinkText="Purchasing">
   <CustomComponent>
-    <div class="d-flex align-items-center">
-      <h6>Status:</h6>
-      <div class="select-style-1 mb-0 ml-10">
-        <div class="select-position">
-          <select class="p-0 pe-5 border-0">
-            <option value="" selected>Semua</option>
-            <option value="1">Pending</option>
-            <option value="2">Approved</option>
-            <option value="3">Received</option>
-            <option value="4">Rejected</option>
-            <option value="5">Completed</option>
-          </select>
+    <div class="d-flex justify-content-end">
+      <div class="d-flex align-items-center">
+        <h6>Status:</h6>
+        <div class="select-style-1 mb-0 ml-10">
+          <div class="select-position">
+            <select class="p-0 pe-5 border-0">
+              <option value="" selected>Semua</option>
+              <option value="1">Pending</option>
+              <option value="2">Approved</option>
+              <option value="3">Received</option>
+              <option value="4">Rejected</option>
+              <option value="5">Completed</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -27,32 +31,32 @@
   
   <Thead>
     <tr>
-      <th data-sortable class="@(_purchaseOrderParameters.OrderBy switch { "PoheNumber desc" => "desc", "PoheNumber asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PoheNumber"))">
+      <th data-sortable class="@(_param.OrderBy switch { "PoheNumber desc" => "desc", "PoheNumber asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PoheNumber"))">
         <a class="dataTable-sorter">
           <h6>PO Number</h6>
         </a>
       </th>
-      <th data-sortable class="@(_purchaseOrderParameters.OrderBy switch { "PoheOrderDate desc" => "desc", "PoheOrderDate asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PoheOrderDate"))">
+      <th data-sortable class="@(_param.OrderBy switch { "PoheOrderDate desc" => "desc", "PoheOrderDate asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PoheOrderDate"))">
         <a class="dataTable-sorter">
           <h6>PO Date</h6>
         </a>
       </th>
-      <th data-sortable class="@(_purchaseOrderParameters.OrderBy switch { "VendorName desc" => "desc", "VendorName asc" => "asc", _ => ""})" onclick="@(() => SortChanged("VendorName"))">
+      <th data-sortable class="@(_param.OrderBy switch { "VendorName desc" => "desc", "VendorName asc" => "asc", _ => ""})" onclick="@(() => SortChanged("VendorName"))">
         <a class="dataTable-sorter">
           <h6>Vendor Target</h6>
         </a>
       </th>
-      <th data-sortable class="@(_purchaseOrderParameters.OrderBy switch { "LineNumber desc" => "desc", "LineNumber asc" => "asc", _ => ""})" onclick="@(() => SortChanged("LineNumber"))">
+      <th data-sortable class="@(_param.OrderBy switch { "LineNumber desc" => "desc", "LineNumber asc" => "asc", _ => ""})" onclick="@(() => SortChanged("LineNumber"))">
         <a class="dataTable-sorter">
           <h6>Line Number</h6>
         </a>
       </th>
-      <th data-sortable class="@(_purchaseOrderParameters.OrderBy switch { "PoheTotalAmount desc" => "desc", "PoheTotalAmount asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PoheTotalAmount"))">
+      <th data-sortable class="@(_param.OrderBy switch { "PoheTotalAmount desc" => "desc", "PoheTotalAmount asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PoheTotalAmount"))">
         <a class="dataTable-sorter">
           <h6>Total Amount</h6>
         </a>
       </th>
-      <th data-sortable class="@(_purchaseOrderParameters.OrderBy switch { "PoheStatus desc" => "desc", "PoheStatus asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PoheStatus"))">
+      <th data-sortable class="@(_param.OrderBy switch { "PoheStatus desc" => "desc", "PoheStatus asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PoheStatus"))">
         <a class="dataTable-sorter">
           <h6>Status</h6>
         </a>
@@ -64,48 +68,49 @@
   </Thead>
   <Tbody>
 
-  @if (PurchaseOrders != null)
+  @if (DataList != null)
   {
-    foreach (var po in PurchaseOrders)
+    foreach (var item in DataList)
     {
       <tr>
         <td>
-          <p>@po.PoheNumber</p>
+          <p>@item.PoheNumber</p>
         </td>
         <td>
-          <p>@po.PoheOrderDate.ToString("dd/MM/yyyy")</p>
+          <p>@item.PoheOrderDate.ToString("dd/MM/yyyy")</p>
         </td>
         <td>
-          <p>@po.VendorName</p>
+          <p>@item.VendorName</p>
         </td>
         <td>
-          <p>@po.LineItem Item(s)</p>
+          <p>@item.LineItem Item(s)</p>
         </td>
         <td>
-          <p>@(((decimal)po.PoheTotalAmount).ToString("C", new CultureInfo("id-ID")))</p>
+          <p>@(((decimal)item.PoheTotalAmount).ToString("C", new CultureInfo("id-ID")))</p>
         </td>
         <td>
-          <span class="status-btn @GetStatus(@po.PoheStatus).Item1">@GetStatus(@po.PoheStatus).Item2</span>
+          <span class="status-btn @GetStatus(@item.PoheStatus).Item1">@GetStatus(@item.PoheStatus).Item2</span>
         </td>
         <td>
           <button class="more-btn ml-10 dropdown-toggle text-gray" id="moreAction" data-bs-toggle="dropdown" aria-expanded="false" title="more">
             <span class="mdi mdi-dots-vertical"></span>
           </button>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction">
+          <ul class="dropdown-menu dropdown-menu-end border-0" aria-labelledby="moreAction">
             <li class="dropdown-item">
-              <a class="text-gray" href="/purchasing/list-order/@po.PoheNumber">Details</a>
+              <a class="text-gray" href="/purchasing/list-order/@item.PoheNumber">Details</a>
             </li>
             <li class="dropdown-item">
-              <a class="text-gray" href="#" data-bs-toggle="modal" data-bs-target="#updateStatus">Switch Status</a>
+              <a class="text-gray" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#update" @onclick="() => OnUpdate(item)">Switch Status</a>
             </li>
             <li class="dropdown-item">
-              <a class="text-danger" href="#" data-bs-toggle="modal" data-bs-target="#delete">Delete</a>
+              <a class="text-danger" href="javascript:void(0)" @onclick="() => OnDelete(item.PoheNumber)">Delete modal</a>
             </li>
           </ul>
         </td>
       </tr>
     }
   }
+  
   </Tbody>
   <Page>
     <Paging MetaData="MetaData" Spread="2" SelectedPage="SelectedPage"/>
@@ -114,9 +119,9 @@
 
 @* // Update Modal *@
 <div class="warning-modal">
-  <div class="modal fade" id="updateStatus" tabindex="-1" style="display: none;" aria-hidden="true">
+  <div class="modal fade" id="update" tabindex="-1" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <form class="modal-content card-style" action="/update" method="post">
+      <div class="modal-content card-style">
         <div class="modal-header px-0 border-0">
           <h5 class="text-bold">Switch Status</h5>
           <button type="button" class="border-0 bg-transparent h1" data-bs-dismiss="modal">
@@ -126,13 +131,13 @@
         <div class="modal-body px-0">
           <div class="content mb-30">
             <div class="select-style-1 col rounded-sm">
-              <label>Purchase Order Status</label>
+              <label>Purchase Order Status for @toUpdate.PoheNumber</label>
               <div class="select-position">
-                <select>
+                <select @bind="toUpdate.PoheStatus">
                   <option value="1">Pending</option>
                   <option value="2">Approve</option>
-                  <option value="3">Receive</option>
-                  <option value="4">Reject</option>
+                  <option value="3">Reject</option>
+                  <option value="4">Receive</option>
                   <option value="5">Complete</option>
                 </select>
               </div>
@@ -142,14 +147,15 @@
             <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
               Cancel
             </button>
-            <button type="submit" data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1">
+            <button type="submit" data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1" @onclick="() => OnUpdateConfirmed()">
               Send
             </button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>
 
-<DeleteModal Target="#delete" id="" data-bs-target="" />
+<DeleteModal @ref="_del" OnDeletedData="OnDeleteConfirmed"/>
+<SuccessNotification @ref="_notif"/>

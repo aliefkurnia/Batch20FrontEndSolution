@@ -1,4 +1,5 @@
-﻿using Realta.Contract.Models;
+﻿using System.Text;
+using Realta.Contract.Models;
 using System.Text.Json;
 using Realta.Domain.RequestFeatures;
 using Realta.Frontend.Features;
@@ -59,6 +60,65 @@ namespace Realta.Frontend.HttpRepository.Master
             Console.WriteLine(pagingRespone.Items);
             return pagingRespone;
 
+        }
+
+        public async Task CreateRegions(RegionsCreateDto regionsCreateDto)
+        {
+            var content = JsonSerializer.Serialize(regionsCreateDto);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            var postResult = await _httpClient.PostAsync("regions", bodyContent);
+            var postContent = await postResult.Content.ReadAsStringAsync();
+
+            if (!postResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(postContent);
+            }
+        }
+
+        public async Task UpdateRegions(RegionsDto regionsDto)
+        {
+            var content = JsonSerializer.Serialize(regionsDto);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var url = Path.Combine("regions", regionsDto.regionCode.ToString());
+
+            var postResult = await _httpClient.PutAsync(url, bodyContent);
+            var postContent = await postResult.Content.ReadAsStringAsync();
+
+
+            if (!postResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(postContent);
+            }
+        }
+
+        public async Task<RegionsDto> GetRegionsById(int id)
+        {
+            var url = Path.Combine("regions", id.ToString());
+
+            var response = await _httpClient.GetAsync(url);
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(content);
+            }
+
+            var regions = JsonSerializer.Deserialize<RegionsDto>(content, _options);
+            return regions;
+        }
+
+        
+        public async Task deleteRegions(int id)
+        {
+            var url = Path.Combine("regions", id.ToString());
+
+            var deleteResult = await _httpClient.DeleteAsync(url);
+            var deleteContent = await deleteResult.Content.ReadAsStringAsync();
+
+            if (!deleteResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(deleteContent);
+            }
         }
     }
 }

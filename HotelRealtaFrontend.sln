@@ -5,10 +5,11 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Realta.Frontend", "Realta.Frontend\Realta.Frontend.csproj", "{56875969-C411-439B-B7AD-91FD326C3B85}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Realta.Contract", "..\HotelRealtaAPI\Realta.Contract\Realta.Contract.csproj", "{EEBE6C92-0B06-47C1-9F40-60BB5060A606}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Realta.Contract", "..\HotelRealtaAPI\Realta.Contract\Realta.Contract.csproj", "{EEBE6C92-0B06-47C1-9F40-60BB5060A606}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Realta.Domain", "..\HotelRealtaAPI\Realta.Domain\Realta.Domain.csproj", "{AD88E18C-7DD3-432C-96BD-D9906EECBCBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Realta.Domain", "..\HotelRealtaAPI\Realta.Domain\Realta.Domain.csproj", "{AD88E18C-7DD3-432C-96BD-D9906EECBCBA}"
 EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +20,14 @@ Global
 		{56875969-C411-439B-B7AD-91FD326C3B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56875969-C411-439B-B7AD-91FD326C3B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56875969-C411-439B-B7AD-91FD326C3B85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A04AEAE7-4C0C-48BA-93E4-6B52B7B5AE7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A04AEAE7-4C0C-48BA-93E4-6B52B7B5AE7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A04AEAE7-4C0C-48BA-93E4-6B52B7B5AE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A04AEAE7-4C0C-48BA-93E4-6B52B7B5AE7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4E66170-F8B9-4368-8D04-ABDC745360E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4E66170-F8B9-4368-8D04-ABDC745360E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4E66170-F8B9-4368-8D04-ABDC745360E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4E66170-F8B9-4368-8D04-ABDC745360E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EEBE6C92-0B06-47C1-9F40-60BB5060A606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EEBE6C92-0B06-47C1-9F40-60BB5060A606}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEBE6C92-0B06-47C1-9F40-60BB5060A606}.Release|Any CPU.ActiveCfg = Release|Any CPU

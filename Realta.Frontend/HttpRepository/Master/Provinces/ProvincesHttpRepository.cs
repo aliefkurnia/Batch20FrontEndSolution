@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
+﻿using System.Text;
+using Microsoft.AspNetCore.WebUtilities;
 using Realta.Contract.Models;
 using Realta.Domain.RequestFeatures;
 using Realta.Frontend.Features;
@@ -39,7 +40,9 @@ namespace Realta.Frontend.HttpRepository.Master
             var queryStringParam = new Dictionary<string, string>
             {
                 ["pageNumber"] = provincesParameter.PageNumber.ToString(),
-                ["searchTerm"] = provincesParameter.SearchTerm == null ? "" : provincesParameter.SearchTerm
+                ["searchTerm"] = provincesParameter.SearchTerm == null ? "" : provincesParameter.SearchTerm,
+                ["countryId"] = provincesParameter.CountryId ?? ""
+
             };
             var response =
                 await _httpClient.GetAsync(QueryHelpers.AddQueryString("provinces/pageList", queryStringParam));
@@ -59,6 +62,64 @@ namespace Realta.Frontend.HttpRepository.Master
             Console.WriteLine(pagingRespone.Items);
             return pagingRespone;
 
+        }
+
+        public async Task CreateProvinces(ProvincesCreateDto provincesCreateDto)
+        {
+            var content = JsonSerializer.Serialize(provincesCreateDto);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            var postResult = await _httpClient.PostAsync("provinces", bodyContent);
+            var postContent = await postResult.Content.ReadAsStringAsync();
+
+            if (!postResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(postContent);
+            }
+        }
+
+        public async Task UpdateProvinces(ProvincesDto provincesDto)
+        {
+            var content = JsonSerializer.Serialize(provincesDto);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var url = Path.Combine("provinces", provincesDto.ProvId.ToString());
+
+            var postResult = await _httpClient.PutAsync(url, bodyContent);
+            var postContent = await postResult.Content.ReadAsStringAsync();
+
+
+            if (!postResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(postContent);
+            }
+        }
+
+        public async Task<ProvincesDto> GetProvincesById(int id)
+        {
+            var url = Path.Combine("provinces", id.ToString());
+
+            var response = await _httpClient.GetAsync(url);
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(content);
+            }
+
+            var prov = JsonSerializer.Deserialize<ProvincesDto>(content, _options);
+            return prov;
+        }
+
+        public async Task deleteProvinces(int id)
+        {
+            var url = Path.Combine("provinces", id.ToString());
+
+            var deleteResult = await _httpClient.DeleteAsync(url);
+            var deleteContent = await deleteResult.Content.ReadAsStringAsync();
+
+            if (!deleteResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(deleteContent);
+            }
         }
     }
 }

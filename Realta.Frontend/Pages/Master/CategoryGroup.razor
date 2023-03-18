@@ -57,7 +57,7 @@
                                     </div>
 
                                     <form action="#">
-                                        <Search OnSearchChanged="SearchChange" />
+                                        <Search OnSearchChanged="SearchChange"/>
                                         <button>
                                             <i class="lni lni-search-alt"></i>
                                         </button>
@@ -67,10 +67,10 @@
                             </div>
                         </div>
                         <div class="table-wrapper table-responsive">
-                            <CategoryGroupTable CategoryGroups="CategoryGroupList" />
+                            <CategoryGroupTable CategoryGroups="CategoryGroupList" OnDeleted="deleteCategoryGroup"/>
                             <!-- end table -->
                         </div>
-                        <Paging MetaData="MetaData" Spread="3" SelectedPage="SelectedPage" />
+                        <Paging MetaData="MetaData" Spread="3" SelectedPage="SelectedPage"/>
                     </div>
                     <!-- end card -->
                 </div>
@@ -81,8 +81,7 @@
     </div>
     <!-- end container -->
 </section>
-@for (int i = 1; i <= @TotalRows; i++)
-{
+
     <!-- Modal Add Category Group -->
     <div class="modal fade" id="addmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addmodal" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -92,25 +91,26 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-
+                <EditForm Model="_categoryGroupCreateDto" OnValidSubmit="Create">
+                    <DataAnnotationsValidator/>
                         <div>
                             <div class="mb-3 row">
                                 <label for="recipient-name" class="col-sm-2 col-form-label">Group Name:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Item-price">
+                                <InputText id="PriceitemsName" @bind-Value="_categoryGroupCreateDto.CagroName"/>
+                                <ValidationMessage For="@(() => _categoryGroupCreateDto.CagroName)"/>
                                 </div>
                             </div>
 
                             <div class="select-style-2  mb-3 row">
                                 <label class="col-sm-2 col-form-label">Type</label>
                                 <div class="select-position col-sm-10">
-                                    <select>
-                                        <option value="">Select category</option>
+                                <InputSelect @bind-Value="_categoryGroupCreateDto.CagroType" class="form-control">
+                                    <ValidationMessage For="@(() => _categoryGroupCreateDto.CagroType)"/>                                        <option value="">Select category</option>
                                         <option value="">Category</option>
                                         <option value="">Service</option>
                                         <option value="">Facility</option>
-                                    </select>
+                                    </InputSelect>
                                 </div>
                             </div>
 
@@ -118,21 +118,24 @@
                             <div class="row">
                                 <label for="policyrules" class="col-sm-2 col-form-label">Policy Rules:</label>
                                 <div class="input-style-2 col-sm-10 ">
-                                    <input type="text" placeholder="Search">
-                                    <span class="icon"><i class="lni lni-search-alt"></i></span>
+                                    <InputText type="text" placeholder="Search" @bind-Value="_categoryGroupCreateDto.PoliId"/>
+                                    <span class="icon">
+                                        <i class="lni lni-search-alt"></i>
+                                    </span>
+                                    
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="message-text" class="col-form-label">Description:</label>
-                                <textarea class="form-control" id="Description"></textarea>
-                            </div>
+                            <InputTextArea class="form-control" id="PriceitemsName" @bind-Value="_categoryGroupCreateDto.CagroDescription"/>
+                            <ValidationMessage For="@(() => _categoryGroupCreateDto.CagroDescription)"/>                            </div>
                             <div class="mb-3">
                                 <label for="formFileSm" class="form-label">Upload Icon</label>
-                                <input class="form-control form-control-sm" id="formFileSm" type="file">
+                            <InputFile class="form-control form-control-sm" type="file" id="PriceitemsName" @bind-Value="_categoryGroupCreateDto.CagroIconUrl"/>
                             </div>
                         </div>
-                    </form>
+                    </EditForm>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -151,25 +154,26 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-
+                    <EditForm Model="_categoryGroupCreateDto" OnValidSubmit="Create">
+                        <DataAnnotationsValidator/>
                         <div>
                             <div class="mb-3 row">
                                 <label for="recipient-name" class="col-sm-2 col-form-label">Group Name:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="Item-price">
+                                    <InputText id="PriceitemsName" @bind-Value="_categoryGroupCreateDto.CagroName"/>
+                                    <ValidationMessage For="@(() => _categoryGroupCreateDto.CagroName)"/>
                                 </div>
                             </div>
 
                             <div class="select-style-2  mb-3 row">
                                 <label class="col-sm-2 col-form-label">Type</label>
                                 <div class="select-position col-sm-10">
-                                    <select>
+                                    <InputSelect @bind-Value="_categoryGroupCreateDto.CagroType" class="form-control">
                                         <option value="">Select category</option>
                                         <option value="">Category</option>
                                         <option value="">Service</option>
                                         <option value="">Facility</option>
-                                    </select>
+                                    </InputSelect>
                                 </div>
                             </div>
 
@@ -178,20 +182,24 @@
                                 <label for="policyrules" class="col-sm-2 col-form-label">Policy Rules:</label>
                                 <div class="input-style-2 col-sm-10 ">
                                     <input type="text" placeholder="Search">
-                                    <span class="icon"><i class="lni lni-search-alt"></i></span>
+                                    <span class="icon">
+                                        <i class="lni lni-search-alt"></i>
+                                    </span>
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="message-text" class="col-form-label">Description:</label>
-                                <textarea class="form-control" id="Description"></textarea>
+                                <InputTextArea id="PriceitemsName" @bind-Value="_categoryGroupCreateDto.CagroDescription" />
+                                <ValidationMessage For="@(() => _categoryGroupCreateDto.CagroDescription)"/>
+
                             </div>
                             <div class="mb-3">
                                 <label for="formFileSm" class="form-label">Upload Icon</label>
-                                <input class="form-control form-control-sm" id="formFileSm" type="file">
+                            <InputFile class="form-control form-control-sm" type="file" id="cagroitemname" @bind-Value="_categoryGroupCreateDto.CagroIconUrl" />
                             </div>
                         </div>
-                    </form>
+                    </EditForm>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -202,41 +210,11 @@
     </div>
 
 
-    @*Delete Modal*@
-    <div class="warning-modal">
-        <div class="modal fade" id="@($"delete{i}")" tabindex="-1" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <form class="modal-content card-style" action="/delete" method="post">
-                    <div class="modal-header px-0 border-0">
-                        <h5 class="text-bold">
-                            <i class="lni lni-warning text-danger me-2"></i> Are you sure
-                            you want to delete?
-                        </h5>
-                    </div>
-                    <div class="modal-body px-0">
-                        <div class="content mb-30">
-                            <p class="text-sm">
-                                Category Group with ID: @i will be deleted. data that has been deleted cannot be recovered!
-                            </p>
-                        </div>
-                        <div class="action d-flex flex-wrap justify-content-end">
-                            <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
-                                Cancel
-                            </button>
-                            <button type="submit" class="main-btn warning-btn btn-hover m-1">
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
-}
 
 @code {
     public int TotalRows { get; set; } = 5;
+
     [Parameter]
     public string CagroDesc { get; set; }
 

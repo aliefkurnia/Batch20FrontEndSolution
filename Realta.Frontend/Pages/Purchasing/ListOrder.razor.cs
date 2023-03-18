@@ -1,38 +1,64 @@
+using System.Data;
 using Microsoft.AspNetCore.Components;
 using Realta.Contract.Models;
 using Realta.Domain.RequestFeatures;
+using Realta.Frontend.Components;
 using Realta.Frontend.HttpRepository.Purchasing;
+using Realta.Frontend.Shared;
 
 namespace Realta.Frontend.Pages.Purchasing;
 
 public partial class ListOrder
 {
-
-    [Inject]
-    public IPurchaseOrderHttpRepository PurchaseOrderRepo { get; set; }
-    public List<PurchaseOrderDto> PurchaseOrders { get; set; } = new List<PurchaseOrderDto>();
+    [Inject] public IPurchaseOrderHttpRepository Repo { get; set; }
+    public List<PurchaseOrderDto> DataList { get; set; } = new();
+    public MetaData MetaData { get; set; } = new();
+    private PurchaseOrderParameters _param = new();
+    private SuccessNotification _notif;
+    private DeleteModal _del;
 
     protected async override Task OnInitializedAsync()
     {
-        // PurchaseOrders = await PurchaseOrderRepo.Get();
-        Console.WriteLine(_purchaseOrderParameters.OrderBy);
-        await GetPaging();
+        // DataList = await Repo.Get();
+        await Get();
     }
-    
-    private PurchaseOrderParameters _purchaseOrderParameters = new PurchaseOrderParameters();
-    public MetaData MetaData { get; set; } = new MetaData();
 
-    private async Task SelectedPage(int page)
+    private async Task Get()
     {
-        _purchaseOrderParameters.PageNumber = page;
-        await GetPaging();
+        var response = await Repo.GetHeaders(_param);
+        DataList = response.Items;
+        MetaData = response.MetaData;
+    }
+
+    private StatusUpdateDto toUpdate = new();
+
+    private async Task OnUpdate(PurchaseOrderDto data)
+    {
+        toUpdate.PoheNumber = data.PoheNumber;
+        toUpdate.PoheStatus = data.PoheStatus;
+    }
+
+    private async Task OnUpdateConfirmed()
+    {
+        await Repo.UpdateStatus(toUpdate);
+        _param.PageNumber = 1;
+        await Get();
+        _notif.Show(NavigationManager.Uri);
     }
     
-    private async Task GetPaging()
+    private async Task OnDelete(string id)
     {
-        var response = await PurchaseOrderRepo.GetPaging(_purchaseOrderParameters);
-        PurchaseOrders = response.Items;
-        MetaData = response.MetaData;
+        _del.Show(id, $"Purchase Order {id} will be deleted!");
+        await Task.Delay(100);
+    }
+
+    private async Task OnDeleteConfirmed(object id)
+    {
+        _del.Hide();
+        await Repo.DeleteHeader(id.ToString());
+        _param.PageNumber = 1;
+        _notif.Show("/purchasing/list-order");
+        await Get();
     }
     
     public static (string, string) GetStatus(int status)
@@ -40,29 +66,32 @@ public partial class ListOrder
         return status switch
         {
             1 => ("warning-btn", "Pending"),
-            2 => ("info-btn", "Approve"),
-            3 => ("danger-btn", "Reject"),
+            2 => ("success-btn", "Approve"),
+            3 => ("close-btn", "Reject"),
             4 => ("secondary-btn", "Receive"),
             5 => ("dark-btn", "Complete")
         };
     }
-    
+    private async Task SelectedPage(int page)
+    {
+        _param.PageNumber = page;
+        await Get();
+    }
     private async Task SearchChanged(string keyword)
     {
-        _purchaseOrderParameters.PageNumber = 1;
-        _purchaseOrderParameters.Keyword = keyword;
-        await GetPaging();
+        _param.PageNumber = 1;
+        _param.Keyword = keyword;
+        await Get();
     }
-    // private async Task SortChanged(string orderBy)
+    // private async Task SetEntry(int entry)
     // {
-    //     Console.WriteLine(_purchaseOrderParameters.OrderBy);
-    //     _purchaseOrderParameters.OrderBy = orderBy;
-    //     await GetPaging();
+    //     Console.WriteLine(@ent);
+    //     _param.PageNumber = 1;
+    //     _param.PageSize = entry;
+    //     await Get();
     // }
-    
     private string orderBy = ""; // menunjukkan kolom yang diurutkan
     private string sortOrder = "asc"; // menunjukkan urutan sortir (asc atau desc)
-    
     private async Task SortChanged(string columnName)
     {
         if (orderBy != columnName)
@@ -77,7 +106,7 @@ public partial class ListOrder
             sortOrder = sortOrder == "asc" ? "desc" : "asc";
         }
     
-        _purchaseOrderParameters.OrderBy = orderBy + " " + sortOrder; // menambahkan urutan sortir baru ke parameter
-        await GetPaging();
+        _param.OrderBy = orderBy + " " + sortOrder; // menambahkan urutan sortir baru ke parameter
+        await Get();
     }
 }

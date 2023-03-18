@@ -9,7 +9,6 @@ public partial class TableToolbar
     public string Keyword;
     [Parameter] public EventCallback<string> OnSearchChanged { get; set; }
     [Parameter] public string Placeholder { get; set; }
-    
     private void SearchChanged()
     {
         if (_timer != null)

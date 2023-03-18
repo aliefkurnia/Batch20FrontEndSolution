@@ -1,143 +1,103 @@
-﻿@page "/transactions"
+﻿@page "/payments/transactions"
 
-<section class="table-components">
-    <div class="container-fluid">
-        <!-- ========== title-wrapper start ========== -->
-        <div class="title-wrapper pt-30">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <div class="title mb-30">
-                        <h2>Transasction</h2>
-                    </div>
-                </div>
-                <!-- end col -->
-                <div class="col-md-6">
-                    <div class="breadcrumb-wrapper mb-30">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="#">Dashboard</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    Transactions
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-                <!-- end col -->
-            </div>
-            <!-- end row -->
-        </div>
-        <!-- ========== title-wrapper end ========== -->
 
-        <!-- ========== tables-wrapper start ========== -->
-        <div class="tables-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card-style mb-30">
-                        <h6 class="mb-10">Daftar Transaction</h6>
-                        <p class="text-sm mb-20">
-                            Informasi tentang daftar transaction.
-                        </p>
-                        <div class="table-wrapper table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>
-                                        <h6>#</h6>
-                                    </th>
-                                    <th>
-                                        <h6>Transaction Number</h6>
-                                    </th>
-                                    <th>
-                                        <h6>Date</h6>
-                                    </th>
-                                    <th>
-                                        <h6>Debet</h6>
-                                    </th>
-                                    <th>
-                                        <h6>Credit</h6>
-                                    </th>
-                                    <th>
-                                        <h6>Note</h6>
-                                    </th>
-                                    <th>
-                                        <h6>Order Number</h6>
-                                    </th>
-                                    <th>
-                                        <h6>Source</h6>
-                                    </th>
-                                    <th>
-                                        <h6>Target</h6>
-                                    </th>
-                                    <th>
-                                        <h6>Transaction Ref</h6>
-                                    </th>
-                                    <th>
-                                        <h6>Type</h6>
-                                    </th>
-                                    <th>
-                                        <h6>User</h6>
-                                    </th>
-                                </tr>
-                                <!-- end table row-->
-                                </thead>
-                                <tbody>
-                                @for (int i = 1; i < 8; i++)
-                                {
-                                    <tr>
-                                        <td class="min-width">
-                                            <p>@i</p>
-                                        </td>
-                                        <td class="min-width">
-                                            <p>TRX#202127-0001</p>
-                                        </td>
-                                        <td class="min-width">
-                                            <p>12 Jul 2022</p>
-                                        </td>
-                                        <td class="min-width">
-                                            <p>Rp. 10,000,000</p>
-                                        </td>
-                                        <td class="min-width">
-                                            <p>-</p>
-                                        </td>
-                                        <td class="min-width">
-                                            <p>Topup</p>
-                                        </td>
-                                        <td class="min-width">
-                                            <p>-</p>
-                                        </td>
-                                        <td class="min-width">
-                                            <p>131-3456-78</p>
-                                        </td>
-                                        <td class="min-width">
-                                            <p>11-4567-980</p>
-                                        </td>
-                                        <td class="min-width">
-                                            <p>-</p>
-                                        </td>
-                                        <td class="min-width">
-                                            <p>TP</p>
-                                        </td>
-                                        <td class="min-width">
-                                            <p>John Doe</p>
-                                        </td>
-                                    </tr>
-                                }
-                                <!-- end table row -->
-                                </tbody>
-                            </table>
-                            <!-- end table -->
-                        </div>
-                    </div>
-                    <!-- end card -->
-                </div>
-                <!-- end col -->
-            </div>
-            <!-- end row -->
+<TableSection Title="Transaction"
+              Link="/payments/transactions"
+              LinkText="Payment">
+  <CustomComponent>
+    <div class="d-flex align-items-center">
+      <h6>Transaction Type :</h6>
+      <div class="select-style-1 mb-0 ml-10">
+        <div class="select-position">
+          <select class="p-0 pe-5 border-0">
+            <option value="" selected>All</option>
+            <option value="1">ORM</option>
+            <option value="2">TP</option>
+            <option value="3">TRB</option>
+            <option value="3">RF</option>
+            <option value="3">RPY</option>
+          </select>
         </div>
-        <!-- ========== tables-wrapper end ========== -->
+      </div>
     </div>
-    <!-- end container -->
-</section>
+  </CustomComponent>
+  <Thead>
+    <tr>
+     <th>
+         <h6>Transaction No</h6>
+     </th>
+     <th>
+         <h6>Date</h6>
+     </th>
+     <th>
+         <h6>Debet</h6>
+     </th>
+     <th>
+         <h6>Credit</h6>
+     </th>
+     <th>
+         <h6>Note</h6>
+     </th>
+     <th>
+         <h6>Order Number</h6>
+     </th>
+     <th>
+         <h6>Source</h6>
+     </th>
+     <th>
+         <h6>Target</h6>
+     </th>
+     <th>
+         <h6>Transaction Ref</h6>
+     </th>
+     <th>
+         <h6>Type</h6>
+     </th>
+     <th>
+         <h6>User</h6>
+     </th>
+ </tr>
+ <!-- end table row-->
+  </Thead>
+  <Tbody>
+
+@for (int i = 1; i < 8; i++)
+{
+<tr>
+<td>
+    <p>TRX#202127-113</p>
+</td>
+<td>
+    <p>12 Jul 2022</p>
+</td>
+<td>
+    <p>Rp. 10,000,000</p>
+</td>
+<td>
+    <p>-</p>
+</td>
+<td>
+    <p>Topup</p>
+</td>
+<td>
+    <p>-</p>
+</td>
+<td>
+    <p>131-3456-78</p>
+</td>
+<td>
+    <p>11-4567-980</p>
+</td>
+<td>
+    <p>-</p>
+</td>
+<td>
+    <p>TP</p>
+</td>
+<td>
+    <p>John Doe</p>
+</td>
+</tr>
+}
+  </Tbody>
+</TableSection>

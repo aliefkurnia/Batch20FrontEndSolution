@@ -1,0 +1,88 @@
+﻿@* // Create Modal *@
+<div class="modal @_modalClass" tabindex="-1" role="dialog" style="display:@_modalDisplay">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="text-bold">Create Stock</h5>
+                <button type="button" class="border-0 bg-transparent h1" @onclick="Hide">
+                    <i class="lni lni-cross-circle"></i>
+                </button>
+            </div>
+            <EditForm Model="_createStock" OnValidSubmit="Create">
+            <DataAnnotationsValidator />
+                <div class="modal-body">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="input-style-1">
+                                    <label>Stock</label>
+                                    <InputText id="StockName" @bind-Value="_createStock.StockName" />
+                                    <ValidationMessage For="@( () => _createStock.StockName)" />
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-style-1">
+                                    <label>Re-Order Point</label>
+                                    <InputNumber id="StockReorderPoint" @bind-Value="_createStock.StockReorderPoint" />
+                                    <ValidationMessage For="@( () => _createStock.StockReorderPoint)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="input-style-1">
+                                    <label>Quantity</label>
+                                    <InputNumber id="StockQuantity" @bind-Value="_createStock.StockQuantity" disabled="true" />
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-style-1">
+                                    <label>Used</label>
+                                    <InputNumber id="StockUsed" @bind-Value="_createStock.StockUsed" disabled="true" />
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-style-1">
+                                    <label>Scrap</label>
+                                    <InputNumber id="StockScrap" @bind-Value="_createStock.StockScrap" disabled="true" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="input-style-1">
+                                    <label>Size</label>
+                                    <InputText id="StockSize" @bind-Value="_createStock.StockSize" />
+                                    <ValidationMessage For="@( () => _createStock.StockSize)" />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-style-1">
+                                    <label>Color</label>
+                                    <InputText id="StockColor" @bind-Value="_createStock.StockColor" />
+                                    <ValidationMessage For="@( () => _createStock.StockColor)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button @onclick="Hide" type="button" class="main-btn danger-btn-outline btn-hover m-1">
+                        Cancel
+                    </button>
+                    <button @onclick="Hide" class="main-btn primary-btn btn-hover m-1">
+                        Submit
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@if (_showBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+
+<SuccessNotification @ref="_notification" />
+

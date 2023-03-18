@@ -1,4 +1,4 @@
-﻿@page "/topup"
+﻿@page "/payments/topup"
 
 <section class="section">
   <div class="container-fluid">
@@ -16,9 +16,9 @@
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                  <a href="#0">Dashboard</a>
+                  <a href="javascript:void(0)">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item"><a href="#0">Transactions</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Transactions</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
                   TopUp
                 </li>
@@ -46,34 +46,35 @@
           </div>
           <div class="profile-info">
             <div class="input-style-1">
-              <label>Payment Name</label>
-              <input type="search" placeholder="Search" value="">
+              <input type="search" placeholder="Search Account (Bank)" value="">
             </div>
             <div class="select-style-1">
-                <label>Account</label>
-                <div class="select-position">
-                  <select class="light-bg">
-                    <option value="">Select Account Number</option>
-                    <option value="">131-6723-923 (BANK BRI)</option>
-                    <option value="">872-9277-912 (BANK MANDIRI)</option>
-                    <option value="">112-9232-293 (BANK BCA)</option>
-                    <option value="">992-9238-293 (BANK JAGO)</option>
-                    <option value="">711-9812-923 (BANK BNI)</option>
-                  </select>
-                </div>
+              <label>Account</label>
+              <div class="select-position">
+                <select class="light-bg">
+                  <option value="">Select Account Number</option>
+                  <option value="">131-6723-923 (BANK BRI)</option>
+                  <option value="">872-9277-912 (BANK MANDIRI)</option>
+                  <option value="">112-9232-293 (BANK BCA)</option>
+                  <option value="">992-9238-293 (BANK JAGO)</option>
+                  <option value="">711-9812-923 (BANK BNI)</option>
+                </select>
               </div>
+            </div>
             <div class="input-style-1">
               <label>Current Saldo</label>
               <input type="text" disabled value="Rp. 10,000,000">
             </div>
-            <div class="col-xxl-4">
-              <button class="main-btn primary-btn btn-hover">
-                Transfer
-              </button>
-            </div>
-            <div class="col-xxl-4">
-              <div class="input-style-1">
-                <input type="text" placeholder="Transfer Amount" value="Rp. 2,000,000">
+            <div class="d-flex justify-content-center flex-wrap">
+              <div class="col-xxl-4">
+                <a class="main-btn primary-btn btn-hover" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#delete">
+                  Top Up
+                </a>
+              </div>
+              <div class="col-xxl-4">
+                <div class="input-style-1">
+                  <input type="text" placeholder="Transfer Amount" value="Rp. 2,000,000">
+                </div>
               </div>
             </div>
           </div>
@@ -91,65 +92,25 @@
             <div class="row">
               <div class="col-12">
                 <div class="input-style-1">
-                  <label>Full Name</label>
-                  <input type="text" placeholder="Full Name">
+                  <input type="search" placeholder="Search Payment (Fintech)" value="">
                 </div>
               </div>
-              <div class="col-12">
-                <div class="input-style-1">
-                  <label>Email</label>
-                  <input type="email" placeholder="Email">
+              <div class="select-style-1">
+                <label>Account</label>
+                <div class="select-position">
+                  <select class="light-bg">
+                    <option value="">Select Account Number</option>
+                    <option value="">081272361444 - Gopay</option>
+                    <option value="">081253456231 - Shopee</option>
+                    <option value="">083552613451 - Flip.id</option>
+                    <option value="">087236641512 - Dana</option>
+                    <option value="">085982734155 - LinkAja</option>
+                  </select>
                 </div>
               </div>
-              <div class="col-12">
-                <div class="input-style-1">
-                  <label>Company</label>
-                  <input type="text" placeholder="Company">
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="input-style-1">
-                  <label>Address</label>
-                  <input type="text" placeholder="Address">
-                </div>
-              </div>
-              <div class="col-xxl-4">
-                <div class="input-style-1">
-                  <label>City</label>
-                  <input type="text" placeholder="City">
-                </div>
-              </div>
-              <div class="col-xxl-4">
-                <div class="input-style-1">
-                  <label>Zip Code</label>
-                  <input type="text" placeholder="Zip Code">
-                </div>
-              </div>
-              <div class="col-xxl-4">
-                <div class="select-style-1">
-                  <label>Country</label>
-                  <div class="select-position">
-                    <select class="light-bg">
-                      <option value="">Select category</option>
-                      <option value="">USA</option>
-                      <option value="">UK</option>
-                      <option value="">Canada</option>
-                      <option value="">India</option>
-                      <option value="">Bangladesh</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="input-style-1">
-                  <label>About Me</label>
-                  <textarea placeholder="Type here" rows="6"></textarea>
-                </div>
-              </div>
-              <div class="col-12">
-                <button class="main-btn primary-btn btn-hover">
-                  Update Profile
-                </button>
+              <div class="input-style-1">
+                <label>Current Saldo</label>
+                <input type="text" disabled value="Rp. 10,000,000">
               </div>
             </div>
           </form>
@@ -162,3 +123,31 @@
   </div>
   <!-- end container -->
 </section>
+
+<!-- Konfirmasi pembayaran -->
+<div class="warning-modal">
+    <div class="modal fade" id="@($"delete")" tabindex="-1" aria-hidden="true" role="dialog" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content card-style warning-card text-center">
+                <div class="modal-body">
+                    <div class="content mb-30">
+                      <h3 class="mb-15">
+                        Konfirmasi Transaksi
+                      </h3>
+                        <p class="text-sm text-medium">
+                            Apakah anda ingin melakukan TopUp dari akun BCA ke Gopay, tekan tombol TopUp untuk melanjutkan konfirmasi.
+                        </p>
+                    </div>
+                    <div class="action d-flex flex-wrap justify-content-center">
+                        <button type="button" data-bs-dismiss="modal" class="main-btn light-btn-outline btn-hover m-1">
+                            Cancel
+                        </button>
+                        <button data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1">
+                            Top Up
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

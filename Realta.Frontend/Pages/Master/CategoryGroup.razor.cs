@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Realta.Contract.Models;
-using Microsoft.AspNetCore.Components;
 using System.Diagnostics.Contracts;
 using Realta.Domain.RequestFeatures;
 using Realta.Frontend.HttpRepository.Master.CategoryGroup;
+using Realta.Frontend.HttpRepository.Master.ServiceTask;
+using Realta.Frontend.Shared;
 
 namespace Realta.Frontend.Pages.Master
 {
@@ -13,10 +14,15 @@ namespace Realta.Frontend.Pages.Master
             public ICategoryGroupHttpRepository CategoryGroupRepository { get; set; }
             public List<CategoryGroupDto> CategoryGroupList { get; set; } = new List<CategoryGroupDto>();
 
+            private List<PolicyDto> policyDto = new List<PolicyDto>();
+            public int Id { get; set; }
+
         protected async override Task OnInitializedAsync()
         {
             //CategoryGroupList = await CategoryGroupRepository.GetCategoryGroup();
+            policyDto = await CategoryGroupRepository.GetPolicy();
             await GetPaging();
+            await CategoryGroupHttp.GetCategoryGroup();
         }
 
         private CategoryGroupParameter _categoryGroupParameter = new CategoryGroupParameter();
@@ -42,5 +48,25 @@ namespace Realta.Frontend.Pages.Master
             _categoryGroupParameter.SearchTerm = searchTerm;
             await GetPaging();
         }
+        
+        private CategoryGroupCreateDto _categoryGroupCreateDto = new CategoryGroupCreateDto();
+        private SuccessNotification _notification;
+
+        [Inject] public ICategoryGroupHttpRepository CategoryGroupHttp { get; set; }
+
+        private async Task Create()
+        {
+            await CategoryGroupHttp.CreateCategoryGroup(_categoryGroupCreateDto);
+            _notification.Show("/categorygroup");
+            _categoryGroupCreateDto = new();
+        }
+
+        private async Task deleteCategoryGroup(int id)
+        {
+            await CategoryGroupRepository.deleteCategoryGroup(id);
+            _categoryGroupParameter.PageNumber = 1;
+            await GetPaging();
+        }
+        
     }
 }

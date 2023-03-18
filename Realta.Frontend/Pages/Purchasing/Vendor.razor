@@ -1,177 +1,102 @@
 ﻿@page "/purchasing/vendor"
 
-<PageTitle>Vendor</PageTitle>
+<TableSection Title="Vendor"
+              Link="/purchasing"
+              LinkText="Purchasing">
 
-<section class="table-components">
-    <div class="container-fluid">
-        <!-- ========== title-wrapper start ========== -->
-        <div class="title-wrapper pt-30">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <div class="title mb-30">
-                        <h2>Vendor</h2>
-                    </div>
-                </div>
-                <!-- end col -->
-                <div class="col-md-6">
-                    <div class="breadcrumb-wrapper mb-30">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="/purchasing">Purchasing</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    Vendor
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-                <!-- end col -->
-            </div>
-            <!-- end row -->
-        </div>
-        <!-- ========== title-wrapper end ========== -->
-        <!-- ========== tables-wrapper start ========== -->
-        <div class="tables-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card-style mb-30">
-                        <div class="title d-flex flex-wrap align-items-left justify-content-between">
-                            <h6 class="mb-10">Vendor Name</h6>
-                            <div class="d-flex align-items-center">
-                                <h6>Status:</h6>
-                                <div class="select-style-1 mb-0 ml-10">
-                                    <div class="select-position">
-                                        <select class="p-0 pe-5 border-0">
-                                            <option value="" selected>Semua</option>
-                                            <option value="1">High</option>
-                                            <option value="0">Lowest</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
-                            <div class="left">
-                                <p>Show <span>@TotalRows</span> entries</p>
-                            </div>
-                            <div class="right">
-                                <div class="table-search d-flex">
-                                    <form action="#">
-                                        <input type="text" placeholder="Search...">
-                                        <button>
-                                            <i class="lni lni-search-alt"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="table-wrapper table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="min-width">
-                                            <h6>#</h6>
-                                        </th>
-                                        <th class="min-width">
-                                            <h6>Vendor Name</h6>
-                                        </th>
-                                        <th class="min-width">
-                                            <h6>Status</h6>
-                                        </th>
-                                        <th class="min-width">
-                                            <h6>Priority</h6>
-                                        </th>
-                                        <th class="min-width">
-                                            <h6>Register At</h6>
-                                        </th>
-                                        <th class="min-width">
-                                            <h6>Web URL</h6>
-                                        </th>
-                                        <th class="min-width">
-                                            <h6 class="text-sm text-medium">
-                                                <a a class="text-primary" href="#" data-bs-toggle="modal" data-bs-target="#@($"addVendor")">Add +</a>
-                                            </h6>
-                                        </th>
-                                    </tr>
-                                    <!-- end table row-->
-                                </thead>
-                                <tbody>
-                                    @{
-                                        var i = 1;
-                                    }
-                                    @foreach (var items in VendorListPaging)
-                                    {
-                                        <tr>
-                                            <td class="min-width">
-                                                <p>@i</p>
-                                            </td>
-                                            <td class="min-width">
-                                                <p>@items.VendorName </p>
-                                            </td>
-                                            <td class="min-width">
-                                                <p>@items.VendorActive</p>
-                                            </td>
-                                            <td class="min-width">
-                                                <p>@items.VendorPriority</p>
-                                            </td>
-                                            <td class="min-width">
-                                                <p>@items.VendorModifiedDate</p>
-                                            </td>
-                                            <td class="min-width">
-                                                <p>@items.VendorWeburl</p>
-                                            </td>
-                                            <td>
-                                                <button class="more-btn ml-10 dropdown-toggle text-gray" id="moreAction" data-bs-toggle="dropdown" aria-expanded="false" title="more">
-                                                    <span class="mdi mdi-dots-vertical"></span>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction">
-                                                    <li class="dropdown-item">
-                                                        <a class="text-gray" href="#" data-bs-toggle="modal" data-bs-target="#@($"edit{items.VendorEntityId}")"> Edit </a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a class="text-gray" href="/purchasing/vendor-product"> Add Item Product </a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a class="text-danger" href="#" data-bs-toggle="modal" data-bs-target="#delete">
-                                                            Delete                                                            
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        i++;
-                                    }
-                                </tbody>
-                            </table>
-                            <!-- end table -->
-                        </div>
+    <Topbar>
+        <TableToolbar Placeholder="Vendor Name" OnSearchChanged="SearchChanged"/>
+    </Topbar>
+    
+    <Thead>
+    <tr>
+        <th class="min-width">
+            <h6>#</h6>
+        </th>
+      <th data-sortable class="@(_vendorParameters.OrderBy switch { "VendorName desc" => "desc", "VendorName asc" => "asc", _ => ""})" onclick="@(() => SortChanged("VendorName"))">
+        <a class="dataTable-sorter">
+          <h6>Vendor Name</h6>
+        </a>
+      </th>
+        <th class="min-width">
+            <h6>Status</h6>
+        </th>
+        <th class="min-width">
+            <h6>Priority</h6>
+        </th>
+        <th class="min-width">
+            <h6>Register At</h6>
+        </th>
+        <th class="min-width">
+            <h6>Web URL</h6>
+        </th>
+        <th>
+            <h6 class="text-sm text-medium">
+                <a a class="text-primary" href="#" data-bs-toggle="modal" data-bs-target="#@("addVendor")">Add +</a>
+            </h6>
+        </th>
+    </tr>
+    </Thead>
+    <Tbody>
 
-                        <!-- <Paging /> -->
-                        <div class="row">
-                            <div class="col">
-                                @*Place for pagination*@
-                                <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end card -->
-                </div>
-                <!-- end col -->
-            </div>
-            <!-- end row -->
+    @foreach (var items in VendorListPaging)
+    {
+        <tr>
+            <td>
+                <p>-</p>
+            </td>
+            <td>
+                <p>@items.VendorName </p>
+            </td>
+            <td>
+                <p>@items.VendorActive</p>
+            </td>
+            <td>
+                <p>@items.VendorPriority</p>
+            </td>
+            <td>
+                <p>@items.VendorModifiedDate</p>
+            </td>
+            <td>
+                <p>@items.VendorWeburl</p>
+            </td>
+            <td>
+                <button class="more-btn ml-10 dropdown-toggle text-gray" id="moreAction" data-bs-toggle="dropdown" aria-expanded="false" title="more">
+                    <span class="mdi mdi-dots-vertical"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction">
+                    <li class="dropdown-item">
+                        <a class="text-gray" href="#" data-bs-toggle="modal" data-bs-target="#@($"edit{items.VendorEntityId}")"> Edit </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a class="text-gray" onclick="setVendorName('@items.VendorName')" href="/purchasing/vendor-product/@items.VendorEntityId"> Add Item Product </a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a class="text-danger" href="" data-bs-toggle="modal" data-bs-target="#@($"delete{@items.VendorEntityId}")"
+                           data-item-id="@items.VendorEntityId">
+                            Delete
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    }
+
+    </Tbody>
+</TableSection>
+    <div class="row">
+        <div class="col">
+            <Paging MetaData="MetaData" Spread="2" SelectedPage="SelectedPage"/>
         </div>
-        <!-- ========== tables-wrapper end ========== -->
     </div>
-    <!-- end container -->
-</section>
+
 
 <!-- Modal Add Vendor -->
 <div class="warning-modal">
-    <div class="modal fade" id="@($"addVendor")" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="@("addVendor")" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form class="modal-content card-style" action="/update" method="post">
+            <EditForm autocomplete="off" class="modal-content card-style" Model="_vendor" OnValidSubmit="Create">
+                <DataAnnotationsValidator/>
                 <div class="modal-header px-0 border-0">
                     <h5 class="text-bold">Add Vendor</h5>
                     <button type="button" class="border-0 bg-transparent h1" data-bs-dismiss="modal">
@@ -180,40 +105,36 @@
                 </div>
                 <div class="modal-body px-0">
                     <div class="row">
-                        <div class="input-style-1 col-3 rounded-sm">
-                            <label>Vendor Id</label>
+                        <div class="input-style-1">
+                            <label for="name">Vendor Name</label>
                             <div class="select-position">
-                                <input class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="input-style-1 col-9 rounded-sm">
-                            <label>Vendor Name</label>
-                            <div class="select-position">
-                                <input class="form-control" type="text">
+                                <InputText id="vendorName" @bind-Value="_vendor.VendorName"/>
+                                <ValidationMessage For="@(() => _vendor.VendorName)"/>
                             </div>
                         </div>
                         <div class="select-style-1 col-6 rounded-sm">
                             <label>Status</label>
-                            <div class="select-position">
-                                <select>
-                                    <option value="1">Active</option>
-                                    <option value="0">InActive</option>
-                                </select>
-                            </div>
+                            <div class="select-position"> 
+                                <InputSelect  @bind-Value="_vendor.VendorActive" class="form-control"> 
+                                    <option value="true" selected>Active</option> 
+                                    <option value="false">Inactive</option> 
+                                </InputSelect> 
+                            </div> 
                         </div>
                         <div class="select-style-1 col-6 rounded-sm">
                             <label>Priority</label>
                             <div class="select-position">
-                                <select>
-                                    <option value="1">Highest</option>
-                                    <option value="0">Lowest</option>
-                                </select>
+                                <InputSelect  @bind-Value="_vendor.VendorPriority" class="form-control"> 
+                                    <option value="true">Priority</option> 
+                                    <option value="false" selected>NotPriority</option> 
+                                </InputSelect> 
                             </div>
                         </div>
                         <div class="input-style-1 col-8 rounded-sm">
                             <label>Website</label>
                             <div class="select-position">
-                                <input type="text" placeholder="URL..." />
+                                <InputText id="VendorWeburl" @bind-Value="_vendor.VendorWeburl" placeholder="URL..."/>
+                                <ValidationMessage For="@(() => _vendor.VendorWeburl)"/>
                             </div>
                         </div>
                     </div>
@@ -226,102 +147,107 @@
                         Save
                     </button>
                 </div>
-            </form>
+            </EditForm>
         </div>
     </div>
 </div>
+<SuccessNotification @ref="_notification" />
 
 <!-- Modal Edit Vendor -->
 @foreach (var items in VendorListPaging)
 {
-<div class="warning-modal">
-    <div class="modal fade" id="@($"edit{items.VendorEntityId}")"  tabindex="-1" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <form class="modal-content card-style" action="/update" method="post">
-                <div class="modal-header px-0 border-0">
-                    <h5 class="text-bold">Edit Vendor</h5>
-                    <button type="button" class="border-0 bg-transparent h1" data-bs-dismiss="modal">
-                        <i class="lni lni-cross-circle"></i>
-                    </button>
-                </div>
-                <div class="modal-body px-0">
-                    <div class="row">
-                        <div class="input-style-1 col-9 rounded-sm">
-                            <label>Vendor Name</label>
-                            <div class="select-position">
-                                <input class="form-control" type="text" placeholder="@items.VendorName">
-                            </div>
-                        </div>
-                        <div class="select-style-1 col-6 rounded-sm">
-                            <label>Status</label>
-                            <div class="select-position">
-                                <select>
-                                    <option value="1">Active</option>
-                                    <option value="0">InActive</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="select-style-1 col-6 rounded-sm">
-                            <label>Priority</label>
-                            <div class="select-position">
-                                <select>
-                                    <option value="1">Highest</option>
-                                    <option value="0">Lowest</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="input-style-1 col-8 rounded-sm">
-                            <label>Website</label>
-                            <div class="select-position">
-                                <input type="text" placeholder="@items.VendorWeburl" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="action d-flex flex-wrap justify-content-end">
-                        <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
-                            Cancel
-                        </button>
-                        <button type="submit" data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1">
-                            Save
+    <div class="warning-modal">
+        <div class="modal fade" id="@($"edit{items.VendorEntityId}")" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <form class="modal-content card-style" action="/update" method="post">
+                    <div class="modal-header px-0 border-0">
+                        <h5 class="text-bold">Edit Vendor</h5>
+                        <button type="button" class="border-0 bg-transparent h1" data-bs-dismiss="modal">
+                            <i class="lni lni-cross-circle"></i>
                         </button>
                     </div>
-                </div>
-            </form>
+                    <div class="modal-body px-0">
+                        <div class="row">
+                            <div class="input-style-1 col-9 rounded-sm">
+                                <label>Vendor Name</label>
+                                <div class="select-position">
+                                    <input class="form-control" type="text" placeholder="@items.VendorName">
+                                </div>
+                            </div>
+                            <div class="select-style-1 col-6 rounded-sm">
+                                <label>Status</label>
+                                <div class="select-position">
+                                    <select>
+                                        <option value="1">Active</option>
+                                        <option value="0">InActive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="select-style-1 col-6 rounded-sm">
+                                <label>Priority</label>
+                                <div class="select-position">
+                                    <select>
+                                        <option value="1">Highest</option>
+                                        <option value="0">Lowest</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-style-1 col-8 rounded-sm">
+                                <label>Website</label>
+                                <div class="select-position">
+                                    <input type="text" placeholder="@items.VendorWeburl"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action d-flex flex-wrap justify-content-end">
+                            <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
+                                Cancel
+                            </button>
+                            <button type="submit" data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 }
-<!-- Modal Delete Vendor -->
-<div class="warning-modal">
-    <div class="modal fade" id="@($"delete")" tabindex="-1" aria-hidden="true" role="dialog" style="display: none;">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content card-style warning-card text-center">
-                <div class="modal-body">
-                    <div class="icon text-danger mb-20">
-                        <i class="lni lni-warning"></i>
-                    </div>
-                    <div class="content mb-30">
-                        <h3 class="mb-15">
-                            Anda akan menghapus Vendor ini?
-                        </h3>
-                        <p class="text-sm text-medium">
-                            Cancel untuk Membatalkan
-                        </p>
-                    </div>
-                    <div class="action d-flex flex-wrap justify-content-center">
-                        <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
-                            Cancel
-                        </button>
-                        <button data-bs-dismiss="modal" class="main-btn warning-btn-outline btn-hover m-1">
-                            Delete
-                        </button>
+
+@foreach (var items in VendorListPaging)
+{
+    <!-- Seragam Modal Delete Vendor-->
+    <div class="warning-modal">
+        <div class="modal fade" id="@($"delete{items.VendorEntityId}")" tabindex="-1" aria-hidden="true" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content card-style warning-card text-center">
+                    <div class="modal-body">
+                        <div class="icon text-danger mb-20">
+                            <i class="lni lni-warning"></i>
+                        </div>
+                        <div class="content mb-30">
+                            <h2 class="mb-15">Warning!</h2>
+                            <h5> Vendor will be deleted? </h5>
+                            <p class="text-sm text-medium">
+                                Data that has been deleted cannot be recovered
+                            </p>
+                        </div>
+                        <div class="action d-flex flex-wrap justify-content-center">
+                            <button data-bs-dismiss="modal" class="main-btn light-btn-outline rounded-full btn-hover m-1">
+                                Cancel
+                            </button>
+                            <button data-bs-dismiss="modal" class="main-btn danger-btn rounded-full btn-hover m-1" @onclick="() => DeleteConfirmed(items.VendorEntityId)">
+                                Continue
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+}
 @code {
-    public int TotalRows { get; set; } = 10;
+
+    [Parameter]
+    public int Id { get; set; }
 }

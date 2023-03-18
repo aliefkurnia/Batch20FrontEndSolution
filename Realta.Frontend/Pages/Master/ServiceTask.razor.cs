@@ -49,7 +49,6 @@ namespace Realta.Frontend.Pages.Master
             _serviceTaskParameter.PageNumber = 1;
             _serviceTaskParameter.SearchTerm = searchTerm;
             await GetPaging();
-
         }
 
 
@@ -64,6 +63,8 @@ namespace Realta.Frontend.Pages.Master
         {
             await ServiceTaskHttp.CreateServiceTask(_serviceTaskDto);
             _notification.Show("/servicetask");
+            _serviceTaskDto = new ServiceTaskCreateDto();
+            await GetPaging();
         }
 
         private async Task deleteServiceTask(int id)

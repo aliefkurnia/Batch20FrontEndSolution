@@ -1,0 +1,84 @@
+﻿@* // Upload Foto Modal *@
+<div class="warning-modal">
+    <div class="modal fade" id="uploadFotoStock[@Id]" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <form class="modal-content card-style" action="" method="post">
+                <div class="modal-header px-0 border-0">
+                    <h5 class="text-bold">Stock : Bantal</h5>
+                    <button type="button" class="border-0 bg-transparent h1" data-bs-dismiss="modal">
+                        <i class="lni lni-cross-circle"></i>
+                    </button>
+                </div>
+                <div class="modal-body px-0">
+                    <div class="content mb-20">
+                        <div class="row">
+                            @if (PhotoList.Count > 0)
+                            {
+                                @foreach (var photo in PhotoList)
+                                {
+                                    <div class="col-3">
+                                        <img src="/resources/images/@photo.SphoPhotoFileName" width="150" height="110" />
+                                    </div>
+                                }
+                            }else{
+                                <div class="col-3">
+                                    <img src="/resources/images/5817814e-2cb2-4d75-8444-55c50570df13RobloxScreenShot 2.png" width="220"   height="110" />
+                                    <div class="mt-10 mb-1">
+                                        <Input type="file" >
+                                    </div>
+                                    <div class="form-check checkbox-style">
+                                        <input class="form-check-input" type="checkbox" value="" id="checkbox-1">
+                                        <label class="form-check-label" for="checkbox-1">
+                                            Set Default Primary
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <img src="https://3.bp.blogspot.com/-lb1D3Dvku20/V1mbk_ZjSuI/AAAAAAAAB9I/KhcJcrKqq0YV9MRSFnKwLCFyE1rg89ROwCKgB/s1600/HTML_inntekno.jpg" alt="google logo" width="220" height="110">
+                                    <div class="mt-10">
+                                        <Input type="file" >
+                                    </div>
+                                    <div class="mt-10">
+                                        <button class="text-danger" style="border: 0; background-color: transparent;">
+                                            <b>X Remove</b>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <img src="/resources/images/6038383f-9644-459b-9c68-679e74859a8cRobloxScreenShot 1.png" width="220" height="110" />
+                                    <div class="mt-10">
+                                        <Input type="file" >
+                                    </div>
+                                    <div class="mt-10">
+                                        <button class="text-danger" style="border: 0; background-color: transparent;">
+                                            <b>X Remove</b>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <img src="/resources/images/c5bee9dc-62ad-4b6b-aec8-33fcb1600913RobloxScreenShot 1.png" width="220" height="110" />
+                                    <div class="mt-10">
+                                        <Input type="file" >
+                                    </div>
+                                    <div class="mt-10">
+                                        <button class="text-danger" style="border: 0; background-color: transparent;">
+                                            <b>X Remove</b>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="action d-flex flex-wrap justify-content-end">
+                        <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
+                            Cancel
+                        </button>
+                        <button type="submit" data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1">
+                            Send
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

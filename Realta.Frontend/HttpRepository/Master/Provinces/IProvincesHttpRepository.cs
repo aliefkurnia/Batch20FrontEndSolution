@@ -9,5 +9,11 @@ namespace Realta.Frontend.HttpRepository.Master
         Task<List<ProvincesDto>> GetProvinces();
 
         Task<PagingResponse<ProvincesDto>> GetProvincesPaging(ProvincesParameter provincesParameter);
+        
+        Task CreateProvinces(ProvincesCreateDto provincesCreateDto);
+        Task UpdateProvinces(ProvincesDto provincesDto);
+        Task<ProvincesDto> GetProvincesById(int id);
+
+        Task deleteProvinces(int id);
     }
 }

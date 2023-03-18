@@ -2,7 +2,6 @@ using Realta.Frontend;
 using Realta.Frontend.HttpRepository.Purchasing;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Realta.Frontend;
 using Realta.Frontend.HttpRepository.Master.CategoryGroup;
 using Realta.Frontend.HttpRepository.Master;
 using Realta.Frontend.HttpRepository.Master.Policy;
@@ -35,8 +34,13 @@ builder.Services.AddScoped<IAddressHttpRepository, AddressHttpRepository>();
 // payment
 
 // purchasing
+// builder.Services.AddScoped<IPurchaseOrderHttpRepository, PurchaseOrderHttpRepository>();
 builder.Services.AddScoped<IVendorHttpRepository, VendorHttpRepository>();
-builder.Services.AddScoped<IPurchaseOrderHttpRepository, PurchaseOrderHttpRepository>();
+builder.Services.AddScoped<IVendorProductHttpRepository, VendorProductHttpRepository>();
+// builder.Services.AddScoped<IPurchaseOrderHttpRepository, PurchaseOrderHttpRepository>();
+builder.Services.AddScoped<IStocksHttpRepository, StocksHttpRepository>();
+builder.Services.AddScoped<IStockDetailHttpRepository, StockDetailHttpRepository>();
+
 
 // resto
 

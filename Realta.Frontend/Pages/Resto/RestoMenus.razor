@@ -1,0 +1,300 @@
+﻿@page "/restoMenus"
+
+<style>
+
+    .upload-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .upload-img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .upload-label {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0.5rem;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        font-size: 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        .upload-label:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .upload-label i {
+            margin-right: 0.5rem;
+        }
+
+
+    .upload-img {
+        width: 125px;
+        height: 125px;
+    }
+
+    .upload-container1 {
+        position: relative;
+    }
+
+    .upload-label-wrapper {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+    }
+
+
+    .upload-container {
+        margin-bottom: 20px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+        .upload-container:not(:last-child) {
+            margin-right: 20px;
+        }
+
+        .upload-container img {
+            display: block;
+            margin: 0 auto;
+        }
+
+</style>
+
+<section class="table-components">
+    <div class="container-fluid">
+        <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+                <div class="col-md-6"><div class="title mb-30"><h2>Tables</h2></div></div>
+
+                <div class="col-md-6">
+                    <div class="breadcrumb-wrapper mb-30">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#0">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Tables
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="tables-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-style mb-30">
+                        <h6 class="mb-10">Responsive Data Table</h6>
+                        <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+                            <div class="left"><p>Show <span>10</span> entries</p></div>
+                            <div class="right">
+                                <div class="table-search d-flex">
+                                    <form action="#">
+                                        <input type="text" placeholder="Search...">
+                                        <button><i class="lni lni-search-alt"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>
+                                            <h6 class="text-sm text-medium"> Icon </h6>
+                                        </th>
+                                        <th>
+                                            <h6 class="text-sm text-medium">Id</h6>
+                                        </th>
+                                        <th class="min-width">
+                                            <h6 class="text-sm text-medium">Menu Name</h6>
+                                        </th>
+                                        <th class="min-width">
+                                            <h6 class="text-sm text-medium">Price</h6>
+                                        </th>
+                                        <th class="min-width">
+                                            <h6 class="text-sm text-medium">Type</h6>
+                                        </th>
+                                        <th class="min-width">
+                                            <h6 class="text-sm text-medium">Status</h6>
+                                        </th>
+                                        <th class="min-width" style="text-align: left;">
+                                            <h6 class="text-sm text-medium">
+                                                <a class="dropdown-item btn btn-sm" data-bs-toggle="modal" data-bs-target="#edit"> Add +</a>
+                                            </h6>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @* @foreach (var item in RestoMenusList)*@
+                                    @for (var i = 0; i <= 3; i++)
+                                    {
+
+
+
+
+                                        <tr>
+                                            <td>
+                                                <div class="check-input-primary">
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-1">
+                                                </div>
+                                            </td>
+                                            <td border="1" width="100px">
+                                                <div class="product">
+                                                    <div class="icon">
+                                                        <img src="vendor/assets/images/resto/meal-food-icon.png" alt="" width="50" height="50">
+
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">"HAha"</p>
+
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">RemeName</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">@*Rp. @string.Format("{0:n0}", item.RemePrice)*@HAHA</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">Food</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">Available</p>
+                                            </td>
+                                            <td>
+                                                <div class="text-sm" style="margin-left: 20px;">
+
+                                                    <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="lni lni-more-alt"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1" style="">
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Remove</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+
+
+                                    <!-- Modal Edit -->
+                                    <div class="modal modal-lg fade" id="edit" tabindex="-1" aria-labelledby="EditLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <form class="modal-content" action="" method="post">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="EditLabel">Add Resto Menus</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="input-style-1 col-6 rounded-sm">
+                                                            <label>Resto Name</label>
+                                                            <div class="select-position">
+                                                                <input type="text" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="input-style-1 col-6 rounded-sm">
+                                                            <label>Price</label>
+                                                            <div class="select-position">
+                                                                <input type="number" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="select-style-1 col-6 rounded-sm">
+                                                            <label>Status</label>
+                                                            <div class="select-position">
+                                                                <select>
+                                                                    <option value="1">Active</option>
+                                                                    <option value="0">InActive</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            @for (var i = 0; i <= 3; i++)
+                                                            {
+                                                                <div class="col-sm-3">
+                                                                    <div class="upload-container">
+                                                                        <img src="vendor/assets/images/resto/meal-food-icon.png" alt="Foto 4" class="img-fluid upload-img">
+                                                                        <label for="file2" class="upload-label">
+                                                                            <i class="bi bi-cloud-upload"></i> Choose Image
+                                                                        </label>
+                                                                        <input type="file" id="file2" style="display:none;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <input type="radio" name="primary_key" value="1">
+                                                                        <label> Primary Image</label>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @* <div class="select-style-1 col-6 rounded-sm">
+                                                <label>Priority</label>
+                                                <div class="select-position">
+                                                <select>
+                                                <option value="1">1=Highest</option>
+                                                <option value="0">0=Lowest</option>
+                                                </select>
+                                                </div>
+                                                </div>
+                                                <div class="input-style-1 col-8 rounded-sm">
+                                                <label>Website</label>
+                                                <div class="select-position">
+                                                <input type="text" placeholder="URL..." />
+                                                </div>
+                                                </div>
+                                                </div>
+                                                </div>*@
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pt-10 d-flex flex-wrap justify-content-between">
+                            <div class="left"><p class="text-sm text-gray">Showing 12/30 products</p></div>
+                            <div class="right table-pagination">
+                                <ul class="d-flex justify-content-end align-items-center">
+                                    <li class="ms-2"><a href="#0"><i class="lni lni-angle-double-left"></i></a></li>
+                                    <li class="ms-2"><a href="#0"> 1 </a></li>
+                                    <li class="ms-2"><a href="#0" class="active"> 2 </a></li>
+                                    <li class="ms-2"><a href="#0"> 3 </a></li>
+                                    <li class="ms-2"><a href="#0"> 4 </a></li>
+                                    <li class="ms-2"><a href="#0"><i class="lni lni-angle-double-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

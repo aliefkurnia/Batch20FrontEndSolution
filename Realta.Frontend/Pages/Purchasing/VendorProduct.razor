@@ -1,4 +1,4 @@
-﻿@page "/purchasing/vendor-product"
+﻿@page "/purchasing/vendor-product/{Id:int}"
 
 <PageTitle>Vendor Product</PageTitle>
 
@@ -44,7 +44,7 @@
                         </div>
                         <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
                             <div class="left">
-                                <p>Show <span>@TotalRows</span> entries</p>
+                                <p>Show <span>@VenproList.Count</span> entries</p>
                             </div>
                             <div class="right">
                                 <div class="table-search d-flex">
@@ -85,23 +85,25 @@
                                     <!-- end table row-->
                                 </thead>
                                 <tbody>
-                                    @for (int i = 1; i <= TotalRows; i++)
+                                @* @for (int i = 1; i <= TotalRows; i++) *@
+                                @foreach(var items in VendorListPaging)
                                     {
                                         <tr>
                                             <td class="min-width">
-                                                <p>@i</p>
+                                                <p>**</p>
                                             </td>
                                             <td class="min-width">
-                                                <p>Kasur Warna Putih @i</p>
+                                                @*<p>@items.StockName</p>*@
                                             </td>
                                             <td class="min-width">
-                                                <p>122</p>
+                                                <p>@items.VeproQtyStocked</p>
                                             </td>
                                             <td class="min-width">
-                                                <p>11</p>
+                                                <p>@items.VeproQtyRemaining</p>
                                             </td>
                                             <td class="min-width">
-                                                <p>Rp.5.000.0000</p>
+                                                <p> <span class="mdi mdi-currency-eur"></span> @string.Format("{0:#,0}", items.VeproPrice),-</p>
+                                                @* <p> Rp. @string.Format("{0:#,0}", items.VeproPrice),-</p> *@
                                             </td>
                                             <td class="action">
                                                 <button class="text-dark" title="Edit">
@@ -114,7 +116,13 @@
                             </table>
                             <!-- end table -->
                         </div>
-                        <Paging />
+                        @* <Paging /> *@
+                        <div class="row">
+                            <div class="col">
+                                @*Place for pagination*@
+                                <Pagination />
+                            </div>
+                        </div>
                     </div>
                     <!-- end card -->
                 </div>
@@ -226,6 +234,3 @@
         </div>
     </div>
 </div>
-@code {
-    public int TotalRows { get; set; } = 10;
-}

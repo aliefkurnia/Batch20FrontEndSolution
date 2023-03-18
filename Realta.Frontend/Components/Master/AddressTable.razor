@@ -29,13 +29,8 @@
         {
             <tr>
                 <td>
-                    <div class="lead">
-                        <div class="check-input-primary">
-                            <input class="form-check-input" type="radio" name="flexradioaddres" id="flexRadioDefault1">
-                        </div>
-                        <div class="lead-text ml-10">
-                            <p>@address.AddrId</p>
-                        </div>
+                    <div class="lead mr-10">
+                            <p>@address.AddrId </p>
                     </div>
                 </td>
                 <td>
@@ -58,10 +53,10 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction" >
                         <li class="dropdown-item">
-                            <a class="text-gray" href="list-order/PO-20230303-001">Edit</a>
+                            <a class="text-gray" @onclick="() => RedirectToUpdate(address.AddrId)">Edit</a>
                         </li>
                         <li class="dropdown-item">
-                            <a class="text-danger" data-bs-toggle="modal" data-bs-target="#@($"delete")">Delete</a>
+                            <a class="text-danger" @onclick="() => Delete(address.AddrId)">Delete</a>
                         </li>
                     </ul>
                 </td>

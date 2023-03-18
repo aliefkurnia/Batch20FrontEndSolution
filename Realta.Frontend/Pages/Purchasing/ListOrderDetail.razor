@@ -1,346 +1,200 @@
 ﻿@page "/purchasing/list-order/{id}"
-@using Realta.Domain.Entities
+@inject NavigationManager NavigationManager
 
 <PageTitle>Purchase Order Detail</PageTitle>
 
-@* <section class="table-components"> *@
-@*   <div class="container-fluid"> *@
-@*     <!-- ========== title-wrapper start ========== --> *@
-@*     <div class="title-wrapper pt-30"> *@
-@*       <div class="row align-items-center"> *@
-@*         <div class="col-md-6"> *@
-@*           <div class="title mb-30"> *@
-@*             <h2>Purchase Order Detail</h2> *@
-@*           </div> *@
-@*         </div> *@
-@*         <!-- end col --> *@
-@*         <div class="col-md-6"> *@
-@*           <div class="breadcrumb-wrapper mb-30"> *@
-@*             <nav aria-label="breadcrumb"> *@
-@*               <ol class="breadcrumb"> *@
-@*                 <li class="breadcrumb-item"> *@
-@*                   <a href="/">Dashboard</a> *@
-@*                 </li> *@
-@*                 <li class="breadcrumb-item"> *@
-@*                   <a href="/purchasing">Purchasing</a> *@
-@*                 </li> *@
-@*                 <li class="breadcrumb-item" aria-current="page"> *@
-@*                   <a href="/purchasing/list-order">Purchase Order</a> *@
-@*                 </li> *@
-@*                 <li class="breadcrumb-item" aria-current="page"> *@
-@*                   Detail *@
-@*                 </li> *@
-@*               </ol> *@
-@*             </nav> *@
-@*           </div> *@
-@*         </div> *@
-@*         <!-- end col --> *@
-@*       </div> *@
-@*       <!-- end row --> *@
-@*     </div> *@
-@*     <!-- ========== title-wrapper end ========== --> *@
-@* *@
-@*     <!-- ========== tables-wrapper start ========== --> *@
-@*     <div class="tables-wrapper"> *@
-@*       <div class="row"> *@
-@*         <div class="col-lg-12"> *@
-@*           <div class="card-style mb-30"> *@
-@*             <div class="mb-3 row g-3"> *@
-@*               <div class="col-md-4"> *@
-@*                 <div class="row"> *@
-@*                   <label for="poNumber" class="col-form-label col-5">PO Number</label> *@
-@*                   <div class="col"> *@
-@*                     <input type="text" class="form-control-plaintext" readonly id="poNumber" value="@_selectedHeader.PoNumber"> *@
-@*                   </div> *@
-@*                 </div> *@
-@*                 <div class="row"> *@
-@*                   <label for="poDate" class="col-form-label col-5">PO Date</label> *@
-@*                   <div class="col"> *@
-@*                     <input type="text" class="form-control-plaintext" readonly id="poDate" value="@(_selectedHeader.PoDate.Date.ToString("dd/MM/yyyy") ?? "-")"> *@
-@*                   </div> *@
-@*                 </div> *@
-@*               </div> *@
-@*               <div class="col-md-4"> *@
-@*                 <div class="row"> *@
-@*                   <label for="vendor" class="col-form-label col-4">Vendor</label> *@
-@*                   <div class="col"> *@
-@*                     <input type="text" class="form-control-plaintext" readonly id="vendor" value="@_selectedHeader.VendorTarget"> *@
-@*                   </div> *@
-@*                 </div> *@
-@*                 <div class="row"> *@
-@*                   <label class="col-form-label col-4">Status</label> *@
-@*                   <div class="col"> *@
-@*                     <span class="status-btn success-btn">@_selectedHeader.Status</span> *@
-@*                   </div> *@
-@*                 </div> *@
-@*               </div> *@
-@*               <div class="col-md-4"> *@
-@*                 <div class="row"> *@
-@*                   <label for="subTotal" class="col-form-label col-5">Sub total</label> *@
-@*                   <div class="col"> *@
-@*                     <input type="text" class="form-control-plaintext" readonly id="subTotal" value="IDR @_selectedHeader.TotalAmount"> *@
-@*                   </div> *@
-@*                 </div> *@
-@*                 <div class="row"> *@
-@*                   <label for="totalAmount" class="col-form-label col-5">Total amount</label> *@
-@*                   <div class="col"> *@
-@*                     <input type="text" class="form-control-plaintext" readonly id="totalAmount" value="IDR @_selectedHeader.TotalAmount"> *@
-@*                   </div> *@
-@*                 </div> *@
-@*               </div> *@
-@*               <span class="divider"> *@
-@*                 <hr/> *@
-@*               </span> *@
-@*             </div> *@
-@*             <TableToolbar/> *@
-@*             <div class="table-wrapper table-responsive"> *@
-@*               <table class="table"> *@
-@*                 <thead> *@
-@*                 <tr> *@
-@*                   <th> *@
-@*                     <h6>#</h6> *@
-@*                   </th> *@
-@*                   <th> *@
-@*                     <h6>Stock Name</h6> *@
-@*                   </th> *@
-@*                   <th> *@
-@*                     <h6>Qty</h6> *@
-@*                   </th> *@
-@*                   <th> *@
-@*                     <h6>Price</h6> *@
-@*                   </th> *@
-@*                   <th> *@
-@*                     <h6>Received</h6> *@
-@*                   </th> *@
-@*                   <th> *@
-@*                     <h6>Rejected</h6> *@
-@*                   </th> *@
-@*                   <th> *@
-@*                     <h6>Total</h6> *@
-@*                   </th> *@
-@*                   <th> *@
-@*                     <h6>Action</h6> *@
-@*                   </th> *@
-@*                 </tr> *@
-@*                 <!-- end table row--> *@
-@*                 </thead> *@
-@*                 <tbody> *@
-@*                 @{ *@
-@*                   var index = 1; *@
-@*                 } *@
-@*                 @foreach (var item in _orderDetails) *@
-@*                 { *@
-@*                   <tr> *@
-@*                     <td> *@
-@*                       <p>@(index++)</p> *@
-@*                     </td> *@
-@*                     <td> *@
-@*                       <p>@item.StockName</p> *@
-@*                     </td> *@
-@*                     <td> *@
-@*                       <p>@item.Qty</p> *@
-@*                     </td> *@
-@*                     <td> *@
-@*                       <p>@item.Price.ToString("C0", new CultureInfo("id-ID"))</p> *@
-@*                     </td> *@
-@*                     <td> *@
-@*                       <p>@item.Received</p> *@
-@*                     </td> *@
-@*                     <td> *@
-@*                       <p>@item.Received</p> *@
-@*                     </td> *@
-@*                     <td> *@
-@*                       <span class="status-btn success-btn">Pending</span> *@
-@*                     </td> *@
-@*                     <td> *@
-@*                       <div class="action"> *@
-@*                         <button class="text-gray" data-bs-toggle="modal" data-bs-target="#updateqty"> *@
-@*                           <i class="lni lni-pencil"></i> *@
-@*                         </button> *@
-@*                         <button class="text-danger" data-bs-toggle="modal" data-bs-target="#delete"> *@
-@*                           <i class="lni lni-trash-can"></i> *@
-@*                         </button> *@
-@*                       </div> *@
-@*                     </td> *@
-@*                   </tr> *@
-@*                 } *@
-@*                 </tbody> *@
-@*               </table> *@
-@*               <!-- end table --> *@
-@*             </div> *@
-@*             <Paging></Paging> *@
-@*           </div> *@
-@*           <!-- end card --> *@
-@*         </div> *@
-@*         <!-- end col --> *@
-@*       </div> *@
-@*       <!-- end row --> *@
-@*     </div> *@
-@*     <!-- ========== tables-wrapper end ========== --> *@
-@*   </div> *@
-@*   <!-- end container --> *@
-@* </section> *@
-@* *@
-@* $1$ // Update Modal #1# *@
-@* <div class="warning-modal"> *@
-@*   <div class="modal fade" id="updateqty" tabindex="-1" style="display: none;" aria-hidden="true"> *@
-@*     <div class="modal-dialog modal-dialog-centered"> *@
-@*       <form class="modal-content card-style" action="/update" method="post"> *@
-@*         <div class="modal-header px-0 border-0"> *@
-@*           <h5 class="text-bold">Edit Detail</h5> *@
-@*           <button type="button" class="border-0 bg-transparent h1" data-bs-dismiss="modal"> *@
-@*             <i class="lni lni-cross-circle"></i> *@
-@*           </button> *@
-@*         </div> *@
-@*         <div class="modal-body px-0"> *@
-@*           <div class="content mb-30 row"> *@
-@*             <div class="col-12"> *@
-@*               <div class="input-style-1"> *@
-@*                 <label>Stock Name</label> *@
-@*                 <input type="text" readonly value="Product 1" disabled> *@
-@*               </div> *@
-@*             </div> *@
-@*             <div class="col-lg-4 col-md-6 col-sm-12"> *@
-@*               <div class="input-style-1"> *@
-@*                 <label>Order Qty</label> *@
-@*                 <input type="number" min="0" value="1" required> *@
-@*               </div> *@
-@*             </div> *@
-@*             <div class="col-lg-4 col-md-6 col-sm-12"> *@
-@*               <div class="input-style-1"> *@
-@*                 <label>Received</label> *@
-@*                 <input type="number" min="0" value="0" required> *@
-@*               </div> *@
-@*             </div> *@
-@*             <div class="col-lg-4 col-md-6 col-sm-12"> *@
-@*               <div class="input-style-1"> *@
-@*                 <label>Rejected</label> *@
-@*                 <input type="number" min="0" value="0" required> *@
-@*               </div> *@
-@*             </div> *@
-@*             <button type="button" data-bs-dismiss="modal" class="main-btn primary-btn-outline btn-hover m-1"> *@
-@*               Generate Barcode *@
-@*             </button> *@
-@*           </div> *@
-@*           <div class="action d-flex flex-wrap justify-content-end"> *@
-@*             <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1"> *@
-@*               Cancel *@
-@*             </button> *@
-@*             <button type="submit" data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1"> *@
-@*               Send *@
-@*             </button> *@
-@*           </div> *@
-@*         </div> *@
-@*       </form> *@
-@*     </div> *@
-@*   </div> *@
-@* </div> *@
-@* *@
-@* <!-- Update Status Modal --> *@
-@* <DeleteModal Target="#delete"></DeleteModal> *@
-@* *@
+<TableSection Title="Purchase Order Detail" Link="/purchasing/list-order" LinkText="Purchase Order">
+  <CustomComponent>
+    <div class="d-flex justify-content-between">
+      <div class="mb-3 row">
+        <div class="col-md-4">
+          <div class="row">
+            <label for="poNumber" class="col-form-label col-5">PO Number</label>
+            <div class="col">
+              <input type="text" class="form-control-plaintext" readonly id="poNumber" value="@Header.PoheNumber">
+            </div>
+          </div>
+          <div class="row">
+            <label for="poDate" class="col-form-label col-5">PO Date</label>
+            <div class="col">
+              <input type="text" class="form-control-plaintext" readonly id="poDate" value="@Header.PoheOrderDate.ToString("dd/MM/yyyy")">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <label for="vendor" class="col-form-label col-4">Vendor</label>
+            <div class="col">
+              <input type="text" class="form-control-plaintext" readonly id="vendor" value="@Header.VendorName">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-form-label col-4">Status</label>
+            <div class="col">
+              <span class="status-btn @GetStatus(@Header.PoheStatus).Item1">@GetStatus(@Header.PoheStatus).Item2</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <label for="subTotal" class="col-form-label col-5">Sub total</label>
+            <div class="col">
+              <input type="text" class="form-control-plaintext" readonly id="subTotal" value="@(((decimal)Header.PoheSubtotal).ToString("C", new CultureInfo("id-ID")))">
+            </div>
+          </div>
+          <div class="row">
+            <label for="totalAmount" class="col-form-label col-5">Total amount</label>
+            <div class="col">
+              <input type="text" class="form-control-plaintext" readonly id="totalAmount" value="@(((decimal)Header.PoheTotalAmount).ToString("C", new CultureInfo("id-ID")))">
+            </div>
+          </div>
+        </div>
+        <span class="divider">
+          <hr/>
+        </span>
+      </div>
+    </div>
+  </CustomComponent>
 
+  <Topbar>
+    <TableToolbar Placeholder="Stock Name..." OnSearchChanged="SearchChanged"/>
+  </Topbar>
 
-A
+  <Thead>
+  <tr>
+    <th data-sortable class="@(_param.OrderBy switch { "StockName desc" => "desc", "StockName asc" => "asc", _ => ""})" onclick="@(() => SortChanged("StockName"))">
+      <a class="dataTable-sorter">
+        <h6>Stock Name</h6>
+      </a>
+    </th>
+    <th data-sortable class="@(_param.OrderBy switch { "PodeOrderQty desc" => "desc", "PodeOrderQty asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PodeOrderQty"))">
+      <a class="dataTable-sorter">
+        <h6>Qty</h6>
+      </a>
+    </th>
+    <th data-sortable class="@(_param.OrderBy switch { "PodePrice desc" => "desc", "PodePrice asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PodePrice"))">
+      <a class="dataTable-sorter">
+        <h6>Price</h6>
+      </a>
+    </th>
+    <th data-sortable class="@(_param.OrderBy switch { "PodeReceivedQty desc" => "desc", "PodeReceivedQty asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PodeReceivedQty"))">
+      <a class="dataTable-sorter">
+        <h6>Received</h6>
+      </a>
+    </th>
+    <th data-sortable class="@(_param.OrderBy switch { "PodeRejectedQty desc" => "desc", "PodeRejectedQuantity asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PodeRejectedQty"))">
+      <a class="dataTable-sorter">
+        <h6>Rejected</h6>
+      </a>
+    </th>
+    <th data-sortable class="@(_param.OrderBy switch { "PodeLineTotal desc" => "desc", "PodeLineTotal asc" => "asc", _ => ""})" onclick="@(() => SortChanged("PodeLineTotal"))">
+      <a class="dataTable-sorter">
+        <h6>Total</h6>
+      </a>
+    </th>
+    <th>
+      <h6>Action</h6>
+    </th>
+  </tr>
+  </Thead>
+  <Tbody>
 
-@* @code { *@
-@* *@
-@*   [Parameter] *@
-@*   public string? Id { get; set; } *@
-@* *@
-@*   private PurchaseOrderHeader? _selectedHeader; *@
-@*   private List<PurchaseOrderDetail>? _orderDetails; *@
-@* *@
-@*   protected override async Task OnInitializedAsync() *@
-@*   { *@
-@*     if (!string.IsNullOrEmpty(Id)) *@
-@*     { *@
-@*       _selectedHeader = await GetOrderHeader(); *@
-@*       _orderDetails = await GetOrderDetails(_selectedHeader?.PoheId ?? 0); *@
-@*     } *@
-@*   } *@
-@* *@
-@*   private async Task<List<PurchaseOrderDetail>?> GetOrderDetails( int id ) *@
-@*   { *@
-@*   // Implementasikan kode untuk mengambil detail pesanan dari API *@
-@*   // Contoh: *@
-@*     var data = new List<PurchaseOrderDetail> *@
-@*     { *@
-@*       new PurchaseOrderDetail{ PodeId = 1, StockName = "ABC", Qty = 10, Price = 1000, Received = 8, Rejected = 0, PodePoheId = 1 }, *@
-@*       new PurchaseOrderDetail{ PodeId = 2, StockName = "DEF", Qty = 5, Price = 2000, Received = 3, Rejected = 0, PodePoheId = 1 }, *@
-@*       new PurchaseOrderDetail{ PodeId = 3, StockName = "GHI", Qty = 20, Price = 1500, Received = 15, Rejected = 1, PodePoheId = 2 }, *@
-@*       new PurchaseOrderDetail{ PodeId = 4, StockName = "JKL", Qty = 15, Price = 2500, Received = 12, Rejected = 2, PodePoheId = 2 }, *@
-@*       new PurchaseOrderDetail{ PodeId = 5, StockName = "MNO", Qty = 8, Price = 5000, Received = 7, Rejected = 0, PodePoheId = 3 }, *@
-@*       new PurchaseOrderDetail{ PodeId = 6, StockName = "PQR", Qty = 12, Price = 3000, Received = 10, Rejected = 1, PodePoheId = 3 }, *@
-@*       new PurchaseOrderDetail{ PodeId = 7, StockName = "STU", Qty = 6, Price = 4000, Received = 5, Rejected = 0, PodePoheId = 4 }, *@
-@*       new PurchaseOrderDetail{ PodeId = 8, StockName = "VWX", Qty = 18, Price = 1800, Received = 16, Rejected = 0, PodePoheId = 4 }, *@
-@*       new PurchaseOrderDetail{ PodeId = 9, StockName = "YZA", Qty = 7, Price = 3500, Received = 6, Rejected = 0, PodePoheId = 5 }, *@
-@*       new PurchaseOrderDetail{ PodeId = 10, StockName = "BCD", Qty = 9, Price = 2200, Received = 8, Rejected = 0, PodePoheId = 5 } *@
-@*     }; *@
-@* *@
-@*     data =  data.Where(s=> s.PodePoheId == id).ToList(); *@
-@* *@
-@*     return data.Any() ? data : null; *@
-@*   } *@
-@* *@
-@*   private async Task<PurchaseOrderHeader?> GetOrderHeader() *@
-@*   { *@
-@*     var data = new List<PurchaseOrderHeader> *@
-@*     { *@
-@*       new PurchaseOrderHeader *@
-@*       { *@
-@*         PoheId = 1, *@
-@*         PoNumber = "PO001", *@
-@*         PoDate = new DateTime(2022, 3, 12), *@
-@*         VendorTarget = "Vendor A", *@
-@*         LineItems = 3, *@
-@*         TotalAmount = 500000, *@
-@*         Status = "Open" *@
-@*       }, *@
-@*       new PurchaseOrderHeader *@
-@*       { *@
-@*         PoheId = 2, *@
-@*         PoNumber = "PO002", *@
-@*         PoDate = new DateTime(2022, 3, 13), *@
-@*         VendorTarget = "Vendor B", *@
-@*         LineItems = 2, *@
-@*         TotalAmount = 700000, *@
-@*         Status = "Closed" *@
-@*       }, *@
-@*       new PurchaseOrderHeader *@
-@*       { *@
-@*         PoheId = 3, *@
-@*         PoNumber = "PO003", *@
-@*         PoDate = new DateTime(2022, 3, 14), *@
-@*         VendorTarget = "Vendor C", *@
-@*         LineItems = 4, *@
-@*         TotalAmount = 900000, *@
-@*         Status = "Open" *@
-@*       }, *@
-@*       new PurchaseOrderHeader *@
-@*       { *@
-@*         PoheId = 4, *@
-@*         PoNumber = "PO004", *@
-@*         PoDate = new DateTime(2022, 3, 15), *@
-@*         VendorTarget = "Vendor A", *@
-@*         LineItems = 1, *@
-@*         TotalAmount = 150000, *@
-@*         Status = "Closed" *@
-@*       }, *@
-@*       new PurchaseOrderHeader *@
-@*       { *@
-@*         PoheId = 5, *@
-@*         PoNumber = "PO005", *@
-@*         PoDate = new DateTime(2022, 3, 16), *@
-@*         VendorTarget = "Vendor D", *@
-@*         LineItems = 5, *@
-@*         TotalAmount = 1200000, *@
-@*         Status = "Open" *@
-@*       } *@
-@*     }; *@
-@* *@
-@*     var orderHeaders = data.FirstOrDefault(s=> s.PoNumber == Id); *@
-@* *@
-@*     return orderHeaders ?? null; *@
-@*   } *@
-@* } *@
+  @if (DataList != null)
+  {
+    @foreach (var item in DataList)
+    {
+      <tr>
+        <td>
+          <p>@item.StockName</p>
+        </td>
+        <td>
+          <p>@item.PodeOrderQty</p>
+        </td>
+        <td>
+          <p>@(((decimal)item.PodePrice).ToString("C", new CultureInfo("id-ID")))</p>
+        </td>
+        <td>
+          <p>@item.PodeReceivedQty</p>
+        </td>
+        <td>
+          <p>@item.PodeRejectedQty</p>
+        </td>
+        <td>
+          <p>@(((decimal)item.PodeLineTotal).ToString("C", new CultureInfo("id-ID")))</p>
+        </td>
+        <td>
+          <div class="action">
+            <button class="text-gray" data-bs-toggle="modal" data-bs-target="#update" @onclick="() => OnUpdate(item)">
+              <i class="lni lni-pencil"></i>
+            </button>
+            <button class="text-danger" @onclick="() => OnDelete(item.PodeId)">
+              <i class="lni lni-trash-can"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    }
+  }
+  </Tbody>
+  <Page>
+    <Paging MetaData="MetaData" Spread="2" SelectedPage="SelectedPage"/>
+  </Page>
+</TableSection>
+
+@* // Update Modal *@
+<div class="warning-modal">
+  <div class="modal fade" id="update" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content card-style" action="/update" method="post">
+        <div class="modal-header px-0 border-0">
+          <h5 class="text-bold">Edit Quantity</h5>
+          <button type="button" class="border-0 bg-transparent h1" data-bs-dismiss="modal">
+            <i class="lni lni-cross-circle"></i>
+          </button>
+        </div>
+        <div class="modal-body px-0">
+          <div class="content mb-30 row">
+            <div class="col-12">
+              <div class="input-style-1">
+                <label for="stockName">Stock Name</label>
+                <input type="text" readonly id="stokName" name="stokName" @bind-value="toUpdate.StockName" disabled>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <div class="input-style-1">
+                <label for="orderQty">Order Qty</label>
+                <input type="number" min="0" id="orderQty" name="orderQty" @bind-value="toUpdate.PodeOrderQty" required>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <div class="input-style-1">
+                <label for="receivedQty">Received</label>
+                <input type="number" min="0" id="receivedQty" name="receivedQty" @bind-value="toUpdate.PodeReceivedQty" required>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <div class="input-style-1">
+                <label for="rejectedQty">Rejected</label>
+                <input type="number" min="0" id="rejectedQty" name="rejectedQty" @bind-value="toUpdate.PodeRejectedQty" required>
+              </div>
+            </div>
+            <button type="button" data-bs-dismiss="modal" class="main-btn primary-btn-outline btn-hover m-1">
+              Generate Barcode
+            </button>
+          </div>
+          <div class="action d-flex flex-wrap justify-content-end">
+            <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
+              Cancel
+            </button>
+            <button type="button" data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1" @onclick="() => OnUpdateConfirmed()">
+              Send
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<DeleteModal @ref="_del" OnDeletedData="OnDeleteConfirmed"/>
+<SuccessNotification @ref="_notif"/>

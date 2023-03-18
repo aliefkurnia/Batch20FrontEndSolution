@@ -86,7 +86,7 @@
 </section>
 
 <!-- Modal Add Policy -->
-    <div class="modal fade" id="addmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addCagroLabel" aria-hidden="true">
+    <div class="modal fade" id="addmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addSetaLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -100,19 +100,15 @@
                             <div >
                                 <div class="input-style-1">
                                     <label for="name">Task Name:</label>
-
                                     <InputText id="ProductName" @bind-Value="_serviceTaskDto.SetaName" />
                                     <ValidationMessage For="@(() => _serviceTaskDto.SetaName)" />
-
                                 </div>
                             </div>
                             <div >
                                 <div class="input-style-1">
                                     <label for="name">Sequence Order:</label>
-
                                     <InputNumber id="UnitsOnOrder" @bind-Value="_serviceTaskDto.SetaSeq" k />
                                     <ValidationMessage For="@(() => _serviceTaskDto.SetaSeq)" />
-
                                 </div>
                             </div>
 
@@ -134,5 +130,4 @@
 
 @code {
     public int TotalRows { get; set; } = 5;
-
 }

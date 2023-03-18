@@ -1,127 +1,79 @@
-﻿using System.ComponentModel;
-using System.Runtime.Serialization;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using Realta.Contract.Models;
+using Realta.Domain.RequestFeatures;
+using Realta.Frontend.Components.Purchasing;
+using Realta.Frontend.HttpRepository.Purchasing;
+using Realta.Frontend.Pages.Resto;
+using Realta.Frontend.Shared;
 
-namespace Realta.Frontend.Pages.Purchasing
+namespace Realta.Frontend.Pages.Purchasing;
+
+public partial class Stocks
 {
-    public partial class Stocks
-    {
-        public List<StocksDummy>? stocksList { get; set; }
+    [Inject]
+    public IStocksHttpRepository StocksHttpRepository { get; set; }
 
-        protected override void OnInitialized()
-        {
-            stocksList = new List<StocksDummy>
-            {
-                new StocksDummy
-                {
-                    StockId = 1,
-                    StockName = "Handuk",
-                    StockDescription = "Handuk Hangat 1",
-                    StockQuantity = 0,
-                    StockReorderPoint = 3,
-                    StockUsed = 0,
-                    StockScrap = 0,
-                    StockSize = "A1",
-                    StockColor = "Color 1",
-                    StockModifiedDate = DateTime.Now
-                },
-                new StocksDummy
-                {
-                    StockId = 2,
-                    StockName = "Seprai",
-                    StockDescription = "Seprai Nyaman 2",
-                    StockQuantity = 1,
-                    StockReorderPoint = 3,
-                    StockUsed = 1,
-                    StockScrap = 0,
-                    StockSize = "A2",
-                    StockColor = "Color 2",
-                    StockModifiedDate = DateTime.Now
-                },
-                new StocksDummy
-                {
-                    StockId = 3,
-                    StockName = "Bantal",
-                    StockDescription = "Bantal Aman 3",
-                    StockQuantity = 2,
-                    StockReorderPoint = 3,
-                    StockUsed = 0,
-                    StockScrap = 2,
-                    StockSize = "A3",
-                    StockColor = "Color 3",
-                    StockModifiedDate = DateTime.Now
-                },
-                new StocksDummy
-                {
-                    StockId = 4,
-                    StockName = "Guling",
-                    StockDescription = "Guling Nyaman 4",
-                    StockQuantity = 0,
-                    StockReorderPoint = 3,
-                    StockUsed = 0,
-                    StockScrap = 0,
-                    StockSize = "A4",
-                    StockColor = "Color 4",
-                    StockModifiedDate = DateTime.Now
-                },
-                new StocksDummy
-                {
-                    StockId = 5,
-                    StockName = "Sabun",
-                    StockDescription = "Sabun Wangy 5",
-                    StockQuantity = 0,
-                    StockReorderPoint = 3,
-                    StockUsed = 0,
-                    StockScrap = 0,
-                    StockSize = "A5",
-                    StockColor = "Color 5",
-                    StockModifiedDate = DateTime.Now
-                },
-                new StocksDummy
-                {
-                    StockId = 6,
-                    StockName = "Pasta Gigi",
-                    StockDescription = "Tersedias 6",
-                    StockQuantity = 0,
-                    StockReorderPoint = 3,
-                    StockUsed = 0,
-                    StockScrap = 0,
-                    StockSize = "A6",
-                    StockColor = "Color 6",
-                    StockModifiedDate = DateTime.Now
-                },
-            };
-        }
+    public List<StocksDto> stocksList { get; set; } = new List<StocksDto>();
+    public List<StockPhotoDto> stocksPhotoList { get; set; } = new List<StockPhotoDto>();
+
+    public MetaData MetaData { get; set; } = new MetaData();
+    private StocksParameters _stocksParameters = new StocksParameters();
+
+    protected async override Task OnInitializedAsync()
+    {
+        await GetPaging();
+
     }
 
-    public class StocksDummy
+    private async Task SelectedPage(int page)
     {
-        [DisplayName("Stock Id")]
-        public int? StockId { get; set; }
+        _stocksParameters.PageNumber = page;
+        await GetPaging();
+    }
+    private async Task GetPaging()
+    {
+        var response = await StocksHttpRepository.GetStocksPaging(_stocksParameters);
+        stocksList = response.Items;
+        MetaData = response.MetaData;
+    }
 
-        [DisplayName("Stock Name")]
-        public string StockName { get; set; }
+    private async Task SearchChange(string searchTerm)
+    {
+        _stocksParameters.PageNumber = 1;
+        _stocksParameters.SearchTerm = searchTerm;
+        await GetPaging();
+    }
 
-        [DisplayName("Stock Description")]
-        public string? StockDescription { get; set; }
+    private async Task applySort(ChangeEventArgs eventArgs)
+    {
+        _stocksParameters.OrderBy = eventArgs.Value.ToString();
+        await GetPaging();
+    }
 
-        [DisplayName("Stock Quantity")]
-        public short StockQuantity { get; set; }
+    private ModalCreateStock _createStock;
 
-        [DisplayName("Stock Re-Order Point")]
-        public short StockReorderPoint { get; set; }
+    private ModalUpdateStock _updateStock;
 
-        [DisplayName("Stock Used")]
-        public short? StockUsed { get; set; }
+    public StocksDto GetUpdateStock { get; set; }
+    private async Task UpdateStock(int id)
+    {
+        GetUpdateStock = await StocksHttpRepository.GetStockById(id);
+        _updateStock.Show();
+    }
 
-        [DisplayName("Stock Scrap")]
-        public short? StockScrap { get; set; }
+    [Inject]
+    public IJSRuntime Js { get; set; }
 
-        [DisplayName("Stock Size")]
-        public string? StockSize { get; set; }
-
-        [DisplayName("Stock Color")]
-        public string? StockColor { get; set; }
-        public DateTime? StockModifiedDate { get; set; }
-
+    private async Task onDelete(int id)
+    {
+        var stocks = stocksList.FirstOrDefault(s => s.StockId.Equals(id));
+        var confirmed = await Js.InvokeAsync<bool>("confirm", $"Delete stock {stocks.StockName} ?");
+        if (confirmed)
+        {
+            await StocksHttpRepository.DeleteStock(id);
+            _stocksParameters.PageNumber = 1;
+            await GetPaging();
+        }
     }
 }

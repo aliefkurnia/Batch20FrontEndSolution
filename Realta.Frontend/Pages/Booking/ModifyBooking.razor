@@ -1,110 +1,295 @@
 ﻿@page "/booking/room-extra"
-<div class="col-lg-12">
-                <!-- input style start -->
-                <div class="card-style mb-30">
-                  <h5 class="mb-25">Modify Your Booking <br/> <h8>We will use these detail to share your booking information</h8></h5>       
-                  <div class="input-style-1">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Full Name">
-                  </div>
-                  <!-- end input -->
-                  <div class="input-style-2">
-                    <label>Email</label>
-                    <input type="email" placeholder="Email">
-                  </div>
-                  <!-- end input -->
-                  <div class="input-style-2">
-                    <label>Mobile Number</label>
-                    <input type="number" placeholder="MobileNumber">
-                  </div>
-                  <!-- end input -->
-                </div>
-                <!-- end card -->
-                <!-- ======= input style end ======= -->
 
-                <!-- ======= select style start ======= -->
-                <div class="card-style mb-30">
-                  <h6 class="mb-25">Selects</h6>
-                  <div class="select-style-1">
-                    <label>Category</label>
-                    <div class="select-position">
-                      <select>
-                        <option value="">Select category</option>
-                        <option value="">Category one</option>
-                        <option value="">Category two</option>
-                        <option value="">Category three</option>
-                      </select>
-                    </div>
-                  </div>
-                  <!-- end select -->
-                  <div class="select-style-2">
-                    <div class="select-position">
-                      <select>
-                        <option value="">Select category</option>
-                        <option value="">Category one</option>
-                        <option value="">Category two</option>
-                        <option value="">Category three</option>
-                      </select>
-                    </div>
-                  </div>
-                  <!-- end select -->
-                </div>
-                <!-- end card -->
-                <!-- ======= select style end ======= -->
-
-                <!-- ======= select style start ======= -->
-                <div class="card-style mb-30">
-                  <h6 class="mb-25">Time and Date</h6>
-                  <div class="input-style-1">
-                    <label>Date</label>
-                    <input type="date">
-                  </div>
-                  <!-- end input -->
-                  <div class="input-style-2">
-                    <input type="date">
-                    <span class="icon"><i class="lni lni-chevron-down"></i></span>
-                  </div>
-                  <!-- end input -->
-                  <div class="input-style-2">
-                    <input type="time">
-                  </div>
-                  <!-- end input -->
-                </div>
-                <!-- end card -->
-                <!-- ======= input style end ======= -->
-
-               <div class="col-lg-6">
-                <div class="card-style mb-30">
-                  <h6 class="mb-10">Striped Table</h6>
-                  <p class="text-sm mb-20">
-                    For Striped Table—light padding and only horizontal
-                    dividers.
-                  </p>
-                  <div class="table-wrapper table-responsive">
-                    <table class="table striped-table">
-                        <thead>
-                          <tr>
-                            <th scope="col">Item Name</th>
-                            <th scope="col">Price Item</th>
-                            <th scope="col">Action</th>
-                          </tr>
-                          <tr>
-                            <th scope="col">Cola-Cola</th>
-                            <th scope="col">Rp.7.000</th>
-                            <th scope="col">
-                              <button class="btn btn-primary">Add</button>
-                              <button class="btn btn-danger">Delete</button>
-                            </th>
-                          </tr>
-                        </thead>
-                    </table>
-                    <!-- end table -->
-                  </div>
-                </div>
-                <!-- end card -->
+<section>
+  <div class="title-wrapper pt-30">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <div class="title d-flex align-items-center flex-wrap mb-30">
+          <h2 class="ml-20">Modify You Booking</h2>
+        </div>
+      </div>
+      <!-- end col -->
+      <div class="col-md-6">
+        <div class="breadcrumb-wrapper mb-30">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="/">Dashboard</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="/hotelList">Hotel List</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="/booking/room">Booking Room Detail</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Modify Your Booking
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <!-- end col -->
+    </div>
+    <!-- end row -->
+  </div>
+  
+  <div class="row ml-10">
+    <div class="col-8 col-lg-8 ">
+      <div class="card-style-3">
+        <div class="card-style-2 mb-20">
+          <h5>Enter Your Details</h5>
+        </div>
+        <p class="ml-10 mt-20">We will use these details to share your booking information</p>
+        <form class="form-control-sm">
+          <div class="row">
+            <div class="col-6 mt-15">
+              <div class="input-style-2">
+                <label>Full Name</label>
+                <input type="text" id="name" name="name" autocomplete="name">
               </div>
+              <div class="input-style-2">
+                <label>Mobile Number</label>
+                <input type="tel" id="phone" name="phone" pattern="\+62\d{12}" placeholder="+6281234567890" required>
               </div>
+            </div>
+            <div class="col-6 mt-15">
+              <div class="input-style-2">
+                <label>Email</label>
+                <input type="email" id="email" name="email" autocomplete="email">
+              </div>
+              <a href="#0" class="main-btn primary-btn rounded-full btn-hover mt-30 ml-30" >Send Verification Code</a>
+            </div>
+          </div>
+        </form>
+        <div class="card-style-2 mt-40 mb-20">
+          <h5>Complete Your Booking</h5>
+        </div>
+        <div class="table-wrapper table-responsive">
+          <table class="table">
+            <thead>
+            <tr><!--!--><th class="min-width"><h6>#</h6></th>
+              <!--!--><th class="min-width"><h6>Item Name</h6></th>
+              <!--!--><th class="min-width"><h6 class="ml-15">Price</h6></th>
+              <th class="min-width"><h6 class="text-sm text-medium"><a a="" class="text-primary" href="#" data-bs-toggle="modal" data-bs-target="#addVendor">Add +</a></h6></th></tr></thead><!--!-->
+            <tbody>
+            <tr>
+              <td class="min-width">
+                <p>1</p>
+              </td>
+              <td class="min-width">
+                <p>Extra Bed</p>
+              </td>
+              <td class="min-width">
+                <p class="">IDR 50.000</p>
+              </td>
+              <td>
+                <button class="more-btn ml-10 dropdown-toggle text-gray" id="moreAction" data-bs-toggle="dropdown" aria-expanded="false" title="more"><span class="mdi mdi-dots-vertical"></span></button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction"><li class="dropdown-item"><a class="text-gray" href="#" data-bs-toggle="modal" data-bs-target="#edit"> Edit </a></li>
+                  <li class="dropdown-item"><a class="text-gray" href="/purchasing/vendor-product"> Add Item Product </a></li>
+                  <li class="dropdown-item">
+                    <a class="text-danger" href="#" data-bs-toggle="modal" data-bs-target="#delete">
+                      Delete
+                    </a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <td class="min-width">
+              <p>2</p>
+            </td>
+            <td class="min-width">
+              <p>Cola-Cola</p>
+            </td>
+            <td class="min-width">
+              <p class="">IDR 10.000</p>
+            </td>
+            <td>
+              <button class="more-btn ml-10 dropdown-toggle text-gray" id="moreAction" data-bs-toggle="dropdown" aria-expanded="false" title="more"><span class="mdi mdi-dots-vertical"></span></button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction"><li class="dropdown-item"><a class="text-gray" href="#" data-bs-toggle="modal" data-bs-target="#edit"> Edit </a></li>
+                <li class="dropdown-item"><a class="text-gray" href="/purchasing/vendor-product"> Add Item Product </a></li>
+                <li class="dropdown-item">
+                  <a class="text-danger" href="#" data-bs-toggle="modal" data-bs-target="#delete">
+                    Delete
+                  </a>
+                </li>
+              </ul>
+            </td>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-style-2 mt-40 mb-20">
+          <h5 class="ml-10">Payment</h5>
+          <form class="form-control-sm">
+            <div class="row">
+              <div class="col-6 mt-15">
+                <div class="select-style-1">
+                  <label>Category</label>
+                  <div class="select-position">
+                    <select>
+                      <option value="">Select category</option>
+                      <option value="">Category one</option>
+                      <option value="">Category two</option>
+                      <option value="">Category three</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 mt-15">
+                <div class="input-style-1">
+                  <label>Account Payment</label>
+                  <input type="number" placeholder="Account Payment Number" />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+            <div class="alert-box warning-alert">
+              <div class="alert">
+                <p class="mr-20">
+                  Your account is valid, please continue to book <a href="#0" class="main-btn warning-btn btn-hover ml-10" style="padding: 1px 10px"> Validate </a>
+                </p>
+              </div>
+            </div>
+      </div>
+    </div>
+    <!-- card di kiri -->
+    <div class="col-4 col-lg-4">
+      <div class="card-style-3">
+        <div class="alert-box primary-alert"style="padding:1px 10px;">
+          <div class="alert">
+            <p style="font-size: 13px"; class="fw-bold">
+              Login to see lower price
+              <a href="#0" class="main-btn primary-btn btn-hover btn-sm mt-1 ml-10"> Login </a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-7">
+            <p style="font-size: 12px"; class="fw-bold ">
+              Fri, 10 Feb - Sat, 11 Feb
+            </p>
+          </div>
+          <div class="col-5">
+            <p style="font-size: 12px"; class="fw-bold">
+              1 Room 1 Guest
+            </p>
+          </div>
+        </div>
+        <div class="row mt-20">
+          <label for="price" class="card-text text-sm form-label text-muted col">Price</label>
+          <div class="col-7">
+            @*
+            <input type="text" name="price" id="price" class="form-control form-control-sm text-sm text-muted border-0 bg-transparent">
+            *@
+            <p class="text-sm">IDR 300.000</p>
+          </div>
+        </div>
+        <div class="row">
+          <label for="qty" class="card-text text-sm form-label text-muted col">Qty</label>
+          <div class="col-7">
+            @*
+            <input type="number" name="qty" id="qty" class="form-control form-control-sm text-sm text-muted border-0" min="1">
+            *@
+            <p class="text-sm">1</p>
+          </div>
+        </div>
+        <div class="row">
+          <label for="subtotal" class="card-text text-sm form-label text-muted col">Sub total</label>
+          <div class="col-7">
+            @*<input type="text" name="subtotal" id="subtotal" class="form-control form-control-sm text-sm text-muted border-0 bg-transparent">*@
+            <p class="text-sm">IDR 300.000</p>
+          </div>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="main-btn primary-btn btn-hover mt-0 mb-20 mr-40" data-bs-toggle="modal" data-bs-target="#addCoupon">Get Coupons</button>
+        </div>
+        <div class="warning-modal">
+          <div class="modal fade" id="@($"addCoupon")" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <form class="modal-content card-style" action="/update" method="post">
+                <div class="modal-header px-0 border-0">
+                  <h5 class="text-bold">Choose Coupon</h5>
+                  <button type="button" class="border-0 bg-transparent h1" data-bs-dismiss="modal">
+                    <i class="lni lni-cross-circle"></i>
+                  </button>
+                </div>
+                <div class="modal-body px-0">
+                  @foreach (var item in coupon)
+                  {
+                    <div class="row mb-4">
+                      <div class="col-12">
+                        <input type="checkbox" id="@item.Name" name="coupon" value="@item.DiscountPercent">
+                        <label for="@item.Name">@item.Name</label>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="action d-flex flex-wrap justify-content-end">
+                  <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
+                    Cancel
+                  </button>
+                  <button data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1 " @onclick="() => { }">
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-5">
+            <p class="text-sm mb-10 fw-bold">Your Savings:</p>
+          </div>
+          <div class="col-7">
+            <p class="text-sm mb-10 fw-bold ml-10"> IDR 50.000 </p>
+          </div>
+        </div>
+        <div class="row">
+          <label for="tax" class="card-text fw-bold form-label text-muted col">Tax (10%)</label>
+          <div class="col-7">
+            <input type="text" name="tax" id="tax" class="form-control form-control-sm fw-bold text-muted border-0 bg-transparent" value="@Cart.Instance.TaxAmount.ToString("C0", new CultureInfo("id-ID"))" readonly/>
+          </div>
+        </div>
+        <div class="row">
+          <label for="total" class="card-text fw-bold form-label text-muted col">Total</label>
+          <div class="col-7">
+            <input type="text" name="total" id="total" class="form-control form-control-sm fw-bold text-muted border-0 bg-transparent" value="@Cart.Instance.TotalPrice.ToString("C0", new CultureInfo("id-ID"))" readonly/>
+          </div>
+        </div>
+        <a href="#0" class="main-btn primary-btn rounded-full btn-hover mt-20 ml-30">Continue To Book</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 @code {
-
+private readonly List<Coupon> coupon = new List<Coupon>()
+    {
+        new Coupon()
+        {
+            Id = 1,
+            Name = "New Member",
+            DiscountPercent = 10
+        },
+        new Coupon()
+        {
+            Id = 2,
+            Name = "Using Gopay",
+            DiscountPercent = 5
+        },
+        new Coupon()
+        {
+            Id = 3,
+            Name = "More than 2 people",
+            DiscountPercent = 15
+        },
+        new Coupon()
+        {
+            Id = 4,
+            Name = "VIP Member",
+            DiscountPercent = 20
+        }
+    };
 }

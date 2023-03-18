@@ -1,6 +1,8 @@
 ﻿@page "/purchasing/stock/{Id:int}"
+@using Realta.Domain.RequestFeatures
 
-<TableSection Title="Stock Detail"
+
+<TableSection Title="@stocksDetailList[0].StockName"
               Link="/purchasing"
               LinkText="Purchasing">
     <Thead>
@@ -26,7 +28,7 @@
         </tr>
     </Thead>
     <Tbody>
-        @if (stocksDetailList != null)
+        @if (stocksDetailList.Count > 0)
         {
             foreach (var so in stocksDetailList)
             {
@@ -35,20 +37,7 @@
                         <p>@so.StodBarcodeNumber</p>
                     </td>
                     <td>
-                        @if (so.StodStatus == "1 ")
-                        {
-                            <p>Stocked</p>
-                        }else if (so.StodStatus == "2 ")
-                        {
-                            <p>Used</p>
-                        }else if (so.StodStatus == "3 ")
-                        {
-                            <p>Broken</p>
-                        }
-                        else if (so.StodStatus == "4 ")
-                        {
-                            <p>Completed</p>
-                        }
+                        <span class="status-btn @GetStatus(int.Parse(so.StodStatus.Trim())).Item1">@GetStatus(int.Parse(so.StodStatus.Trim())).Item2</span>
                     </td>
                     <td>
                         <p>@so.StodNotes</p>
@@ -69,6 +58,9 @@
             }
         }
     </Tbody>
+    <Page>
+        <Paging MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+    </Page>
 </TableSection>
 
 @* // Update Modal *@

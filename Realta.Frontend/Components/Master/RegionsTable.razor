@@ -1,57 +1,56 @@
 ﻿@if (Regions.Count > 0)
 {
-          <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="min-width">
-                                            <h6>ID</h6>
-                                        </th>
-                                        <th class="min-width">
-                                            <h6>Regions Name</h6>
-                                        </th>
-                                        <th>
-                                            <h6>Action</h6>
-                                        </th>
-                                    </tr>
-                                    <!-- end table row-->
-                                </thead>
-                                <tbody>
-                                @foreach (var regions in Regions)
-                                {
-                                        <tr>
-                                            <td>
-                                                <div class="lead">
-                                                    <div class="check-input-primary">
-                                                        <input class="form-check-input" type="radio" name="flexRadioRegions" id="flexRadioDefault1">
-                                                    </div>
-                                                    <div class="lead-text ml-10">
-                                                        <p>@regions.regionCode</p>
-                                                    </div>
-                                                </div>
-  
-                                            </td>
-                                            <td>
-                                                <p>@regions.RegionName</p>
-                                            </td>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="min-width">
+                <h6>ID</h6>
+            </th>
+            <th class="min-width">
+                <h6>Regions Name</h6>
+            </th>
+            <th>
+                <h6>Action</h6>
+            </th>
+        </tr>
+        <!-- end table row-->
+        </thead>
+        <tbody>
+        @foreach (var regions in Regions)
+        {
+            <tr>
+                <td>
+                    <div class="lead">
+                        <div class="check-input-primary">
+                            <input class="form-check-input" type="radio" name="flexRadioRegions" id="flexRadioDefault1" value="@regions.regionCode" @onclick="() => SelectRegion(regions.regionCode)">
+                        </div>
+                        <div class="lead-text ml-10">
+                            <p>@regions.regionCode</p>
+                        </div>
+                    </div>
 
-                                            <td>
-                                                <button class="more-btn ml-10 dropdown-toggle" title="More" id="moreAction" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="mdi mdi-dots-vertical"></span>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction">
+                </td>
+                <td>
+                    <p>@regions.RegionName</p>
+                </td>
 
-                                                    <li class="dropdown-item">
-                                                        <a class="text-gray" href="list-order/PO-20230303-001">Edit</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a class="text-danger" href="#" data-bs-toggle="modal" data-bs-target="#@($"delete")">Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                            <!-- end table -->
+                <td>
+                    <button class="more-btn ml-10 dropdown-toggle" title="More" id="moreAction" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="mdi mdi-dots-vertical"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction">
 
+                        <li class="dropdown-item">
+                            <a class="text-gray" @onclick="() => RedirectToUpdate(regions.regionCode)">Edit</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a class="text-danger" @onclick="() => Delete(regions.regionCode)">Delete</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <!-- end table -->
 }

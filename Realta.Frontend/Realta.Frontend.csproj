@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.11" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.11" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.15" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     <PackageReference Include="Microsoft.JSInterop" Version="6.0.11" />
@@ -52,9 +52,19 @@
       <_ContentIncludedByDefault Remove="wwwroot\js\world-merc.js" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\..\Final Project\HotelRealtaAPI\Realta.Contract\Realta.Contract.csproj" />
-      <ProjectReference Include="..\..\..\Final Project\HotelRealtaAPI\Realta.Domain\Realta.Domain.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\HotelRealtaAPI\Realta.Contract\Realta.Contract.csproj" />
+		<ProjectReference Include="..\..\HotelRealtaAPI\Realta.Domain\Realta.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="HttpRepository\Purchasing\PurchaseOrderHttpRepository.cs" />
+	  <Compile Remove="Pages\Purchasing\ListOrderDetail.razor.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="Pages\Purchasing\ListOrderDetail.razor" />
+	</ItemGroup>
+     
 
 </Project>

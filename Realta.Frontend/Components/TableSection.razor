@@ -40,9 +40,7 @@
             <div class="title">
               <h6 class="mb-10">@Title</h6>
             </div>
-            <div class="d-flex justify-content-end">
-              @CustomComponent
-            </div>
+            @CustomComponent
             <div class="table-responsive">
               <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                 @Topbar
@@ -85,7 +83,7 @@
   public string? LinkText { get; set; }
 
   [Parameter]
-  public RenderFragment? CustomComponent { get; set; }
+  public RenderFragment CustomComponent { get; set; }
   
   [Parameter]
   public RenderFragment? Thead { get; set; }
@@ -110,6 +108,5 @@
   
   [Parameter]
   public RenderFragment? Page{ get; set; }
-  
   
 }

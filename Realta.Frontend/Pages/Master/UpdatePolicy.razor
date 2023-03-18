@@ -1,0 +1,43 @@
+﻿@page "/updatePolicy/{Id:int}"
+
+<div class="col-lg-12">
+    <div class="card-style settings-card-2 mb-30">
+        <div class="title mb-30">
+            <h6>Update Service Task</h6>
+        </div>
+        <EditForm Model="_policyDto" OnValidSubmit="Update">
+            <DataAnnotationsValidator />
+            <div class="row">
+                <div class="col-4">
+                    <div class="input-style-1">
+                        <label for="name">Task Name:</label>
+
+                        <InputText id="ServiceTaskName" @bind-Value="_policyDto.PoliName" />
+                        <ValidationMessage For="@(() => _policyDto.PoliName)" />
+
+                    </div>
+                </div>
+
+                <div class="col-5">
+                    <div class="input-style-1">
+                        <label for="setaseq">Sequence Order:</label>
+                        <div class="col-md-10">
+                            <InputText id="setaseq" @bind-Value="_policyDto.PoliDescription" />
+                            <ValidationMessage For="@(() => _policyDto.PoliDescription)" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button class="main-btn primary-btn btn-hover">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </EditForm>
+
+    </div>
+    <!-- end card -->
+</div>
+<SuccessNotification @ref="_notification" />
+

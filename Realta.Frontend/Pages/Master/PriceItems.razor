@@ -46,7 +46,7 @@
                         <div class="row d-flex justify-content-end">
                             <div class=" select-style-2  col-2 ">
                                 <div class="select-position">
-                                    <SortPriceItems SortChanged="Sort" />
+                                    <SortPriceItems SortChanged="Sort"/>
                                 </div>
                             </div>
                         </div>
@@ -76,10 +76,10 @@
                             </div>
                         </div>
                         <div class="table-wrapper table-responsive">
-                            <PriceItemsTable priceItems="PriceItemsList" />
+                            <PriceItemsTable priceItems="PriceItemsList" OnDeleted="deletePriceItems"/>
                             <!-- end table -->
                         </div>
-                        <Paging MetaData="MetaData" Spread="3" SelectedPage="SelectedPage" />
+                        <Paging MetaData="MetaData" Spread="3" SelectedPage="SelectedPage"/>
                     </div>
                     <!-- end card -->
                 </div>
@@ -93,99 +93,66 @@
 </section>
 
 
-@for (int i = 1; i <= @TotalRows; i++)
-{
-    // Update Modal
-    <div class="warning-modal">
-        <div class="modal fade" id="@($"UpdateModal{i}")" tabindex="-1" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Edit Price Item</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
+@* // Update Modal *@
+<div class="warning-modal">
+    <div class="modal fade" id="@($"UpdateModal")" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Edit Price Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
 
-                            <div>
-                                <div class="mb-3 row">
-                                    <label for="recipient-name" class="col-sm-2 col-form-label">Item Name:</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Item-price">
-                                    </div>
-                                </div>
-
-                                <div class="select-style-2   row">
-                                    <label class="col-sm-2 col-form-label">Type</label>
-                                    <div class="select-position col-sm-10">
-                                        <select>
-                                            <option value="">Select category</option>
-                                            <option value="">Category</option>
-                                            <option value="">Service</option>
-                                            <option value="">Facility</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-                                <div class="mb-3 row">
-                                    <label for="recipient-name" class="col-sm-2 col-form-label">Item Price:</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Item-price">
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Description:</label>
-                                    <textarea class="form-control" id="Description"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="formFileSm" class="form-label">Upload Icon</label>
-                                    <input class="form-control form-control-sm" id="formFileSm" type="file">
+                        <div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-2 col-form-label">Item Name:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="Item-price">
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Save</button>
-                    </div>
+
+                            <div class="select-style-2   row">
+                                <label class="col-sm-2 col-form-label">Type</label>
+                                <div class="select-position col-sm-10">
+                                    <select>
+                                        <option value="">Select category</option>
+                                        <option value="">Category</option>
+                                        <option value="">Service</option>
+                                        <option value="">Facility</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-2 col-form-label">Item Price:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="Item-price">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Description:</label>
+                                <textarea class="form-control" id="Description"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="formFileSm" class="form-label">Upload Icon</label>
+                                <input class="form-control form-control-sm" id="formFileSm" type="file">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    // Delete Modal
-    <div class="warning-modal">
-        <div class="modal fade" id="@($"delete{i}")" tabindex="-1" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <form class="modal-content card-style" action="/delete" method="post">
-                    <div class="modal-header px-0 border-0">
-                        <h5 class="text-bold">
-                            <i class="lni lni-warning text-danger me-2"></i> Are you sure
-                            you want to delete?
-                        </h5>
-                    </div>
-                    <div class="modal-body px-0">
-                        <div class="content mb-30">
-                            <p class="text-sm">
-                                Price Items with ID: @i will be deleted. data that has been deleted cannot be recovered!
-                            </p>
-                        </div>
-                        <div class="action d-flex flex-wrap justify-content-end">
-                            <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
-                                Cancel
-                            </button>
-                            <button type="submit" class="main-btn warning-btn btn-hover m-1">
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-}
 
 @*add modal*@
 <div class="modal fade" id="addmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addCagroLabel" aria-hidden="true">
@@ -197,13 +164,13 @@
             </div>
             <div class="modal-body">
                 <EditForm Model="_priceItemsCreateDto" OnValidSubmit="Create">
-                    <DataAnnotationsValidator />
+                    <DataAnnotationsValidator/>
                     <div>
                         <div class="row input-style-1">
                             <label for="recipient-name" class="col-sm-2 col-form-label">Item Name:</label>
                             <div class="col-sm-10">
-                                <InputText id="PriceitemsName" @bind-Value="_priceItemsCreateDto.PritName" />
-                                <ValidationMessage For="@(() => _priceItemsCreateDto.PritName)" />
+                                <InputText id="PriceitemsName" @bind-Value="_priceItemsCreateDto.PritName"/>
+                                <ValidationMessage For="@(() => _priceItemsCreateDto.PritName)"/>
                             </div>
                         </div>
 
@@ -211,6 +178,7 @@
                             <label class="col-sm-2 col-form-label">Type</label>
                             <div class="select-position col-sm-10">
                                 <InputSelect @bind-Value="_priceItemsCreateDto.PritType" class="form-control">
+                                    <ValidationMessage For="@(() => _priceItemsCreateDto.PritType)"/>
                                     <option disabled="">Select category</option>
                                     <option value="">Category</option>
                                     <option value="">Service</option>
@@ -222,34 +190,34 @@
                         <div class="input-style-1 row">
                             <label class="col-sm-2" for="price">Item Price:</label>
                             <div class="col-md-10">
-                                <InputNumber id="Item-price" @bind-Value="_priceItemsCreateDto.PritPrice" />
-                                <ValidationMessage For="@(() => _priceItemsCreateDto.PritPrice)" />
+                                <InputNumber id="Item-price" @bind-Value="_priceItemsCreateDto.PritPrice"/>
+                                <ValidationMessage For="@(() => _priceItemsCreateDto.PritPrice)"/>
                             </div>
                         </div>
 
                         <div class=" select-style-1">
                             <label for="message-text" class="col-form-label">Description:</label>
-                            <InputTextArea class="form-control" id="PriceitemsName" @bind-Value="_priceItemsCreateDto.PritDescription" />
-                            <ValidationMessage For="@(() => _priceItemsCreateDto.PritName)" />
+                            <InputTextArea class="form-control" id="PriceitemsName" @bind-Value="_priceItemsCreateDto.PritDescription"/>
+                            <ValidationMessage For="@(() => _priceItemsCreateDto.PritDescription)"/>
                         </div>
-                        
+
 
                         <div class="mb-3">
-                            <InputFile class="form-control form-control-sm" type="file" id="PriceitemsName" @bind-Value="_priceItemsCreateDto.PritIconUrl" />
-                        </div>
-                        
-                        <div class=" col-12 modal-footer">
-                            <button type="button" class="main-btn danger-btn" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="main-btn primary-btn" data-bs-dismiss="modal">Submit</button>
+                            <InputFile class="form-control form-control-sm" type="file" id="PriceitemsName" @bind-Value="_priceItemsCreateDto.PritIconUrl"/>
                         </div>
 
+                        <div class="col-12 modal-footer">
+                            <button class="main-btn primary-btn btn-hover" data-bs-dismiss="modal">
+                                Submit
+                            </button>
+                        </div>
                     </div>
                 </EditForm>
             </div>
         </div>
     </div>
 </div>
-<SuccessNotification @ref="_notification" />
+<SuccessNotification @ref="_notification"/>
 
 
 @code {

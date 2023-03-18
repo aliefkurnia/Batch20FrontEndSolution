@@ -26,8 +26,8 @@ namespace Realta.Frontend.Components.Master
 
         private async Task Delete(int id)
         {
-            var servicetask = priceItems.FirstOrDefault(p => p.PritId.Equals(id));
-            var confirmed = await Js.InvokeAsync<bool>("confirm", $"Delete Service Task {servicetask.PritName} ?");
+            var prit = priceItems.FirstOrDefault(p => p.PritId.Equals(id));
+            var confirmed = await Js.InvokeAsync<bool>("confirm", $"Delete Service Task {prit.PritName} ?");
             if (confirmed)
             {
                 await OnDeleted.InvokeAsync(id);

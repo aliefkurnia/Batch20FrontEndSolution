@@ -22,7 +22,7 @@ public partial class Paging
     {
         _links = new List<PagingLink>();
         _links.Add(new PagingLink(MetaData.CurrentPage - 1, MetaData.HasPrevious, "‹"));
-
+        
         for (var i = 1; i <= MetaData.TotalPages; i++) {
             if (i >= MetaData.CurrentPage - Spread && i <= MetaData.CurrentPage + Spread) {
                 _links.Add(new PagingLink(i, true, i.ToString()) { Active = MetaData.CurrentPage == i });

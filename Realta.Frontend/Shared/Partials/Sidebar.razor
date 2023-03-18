@@ -97,16 +97,58 @@
                         <i class="mdi mdi-account-group-outline"></i>
                     </span>
                     <span class="text">Users</span>
-                </a>
-                <ul id="users" class="collapse dropdown-nav">
-                    <li>
-                        <a href="settings.html"> Settings </a>
+                      </a>
+                      <ul id="users" class="collapse dropdown-nav">
+                        <li>
+                          <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="profile">
+                              My Profile
+                            </NavLink>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="booking">
+                              My Booking
+                            </NavLink>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="accounts">
+                              My Accounts
+                            </NavLink>
+                          </div>
+                        </li>
+                      </ul>
                     </li>
-                    <li>
-                        <a href="blank-page.html"> Blank Page </a>
+                    
+                    <li class="nav-item nav-item-has-children">
+                      <a href="#0" 
+                         class="collapsed" 
+                         data-bs-toggle="collapse" 
+                         data-bs-target="#auth" 
+                         aria-controls="auth" 
+                         aria-expanded="false" 
+                         aria-label="Toggle navigation">
+                        <span class="icon">
+                          <i class="mdi mdi-shield-key-outline"></i>
+                        </span>
+                        <span class="text">Auth</span>
+                      </a>
+                      <ul id="auth" class="dropdown-nav collapse" style="">
+                        <div class="nav-item px-3">
+                          <NavLink class="nav-link" href="signin">
+                            Sign In
+                          </NavLink>
+                        </div>
+                        <div class="nav-item px-3">
+                          <NavLink class="nav-link" href="signup">
+                            Sign Up
+                          </NavLink>
+                        </div>
+                      </ul>
                     </li>
-                </ul>
-            </li>
             
             @* HR *@
             <li class="nav-item nav-item-has-children">
@@ -184,87 +226,102 @@
       <a href="/booking/room-invoice"> Invoice </a>
     </li>
     <li>
-      <a href="/booking/room-extra"> Room Detail </a>
-                    </li>
-                </ul>
-            </li> 
-        
-            @* Resto *@
-            <li class="nav-item nav-item-has-children">
-                <a href="#0"
-                   class="collapsed"
-                   data-bs-toggle="collapse"
-                   data-bs-target="#resto"
-                   aria-controls="resto"
-                   aria-expanded="false"
-                   aria-label="Toggle navigation">
-                    <span class="icon">
-                        <i class="mdi mdi-silverware"></i>
-                    </span>
-                    <span class="text">Resto</span>
-                </a>
-                <ul id="resto" class="collapse dropdown-nav">
-                    <li>
-                        <a href="settings.html"> Settings </a>
-                    </li>
-                    <li>
-                        <a href="blank-page.html"> Blank Page </a>
-                    </li>
-                </ul>
-            </li>
-        
-            @* Payment *@
-            <li class="nav-item nav-item-has-children">
-                <a href="#0"
-                   class="collapsed"
-                   data-bs-toggle="collapse"
-                   data-bs-target="#payment"
-                   aria-controls="payment"
-                   aria-expanded="false"
-                   aria-label="Toggle navigation">
-                    <span class="icon">
-                        <i class="mdi mdi-wallet-outline"></i>
-                    </span>
-                    <span class="text">Payment</span>
-                </a>
-                <ul id="payment" class="collapse dropdown-nav">
-                    <li>
-                        <a href="settings.html"> Settings </a>
-                    </li>
-                    <li>
-                        <a href="blank-page.html"> Blank Page </a>
-                    </li>
-                </ul>
-            </li>
-        
-            @* Purchasing *@
-            <li class="nav-item nav-item-has-children">
-                <a href="#0"
-                   class="collapsed"
-                   data-bs-toggle="collapse"
-                   data-bs-target="#purchasing"
-                   aria-controls="purchasing"
-                   aria-expanded="false"
-                   aria-label="Toggle navigation">
-                    <span class="icon">
-                        <i class="mdi mdi-dolly"></i>
-                    </span>
-                    <span class="text">Purchasing</span>
-                </a>
-                <ul id="purchasing" class="collapse dropdown-nav">
-                    <li>
-                        <NavLink class="nav-link" href="/purchasing/vendor">Vendor</NavLink>
-                    </li>
-                    <li>
-                        <NavLink class="nav-link" href="/purchasing/stocks">Stock</NavLink>
-                    </li>
-                    <li>
-                        <NavLink class="nav-link" href="/purchasing/list-order">Purchase Order</NavLink>
-                    </li>
-                </ul>
-            </li> 
-        </ul>
-    </nav>
+      <a href="/booking/room-extra"> Modify Booking </a>
+    </li>                    
+  </ul>
+</li>
+
+@* Resto *@
+<li class="nav-item nav-item-has-children">
+  <a href="#0"
+     class="collapsed"
+     data-bs-toggle="collapse"
+     data-bs-target="#resto"
+     aria-controls="resto"
+     aria-expanded="false"
+     aria-label="Toggle navigation">
+    <span class="icon">
+      <i class="mdi mdi-silverware"></i>
+    </span>
+    <span class="text">Resto</span>
+  </a>
+  <ul id="resto" class="collapse dropdown-nav">
+    <li>
+      <a href="restoMenus"> Resto Menus </a>
+    </li>
+    <li>
+      <a href="orderMenus"> Order Menus </a>
+    </li>
+    <li>
+      <a href="completeOrder"> Complete Order </a>
+    </li>
+  </ul>
+</li>
+
+@* Payment *@
+<li class="nav-item nav-item-has-children">
+  <a href="#0"
+     class="collapsed"
+     data-bs-toggle="collapse"
+     data-bs-target="#payment"
+     aria-controls="payment"
+     aria-expanded="false"
+     aria-label="Toggle navigation">
+    <span class="icon">
+      <i class="mdi mdi-wallet-outline"></i>
+    </span>
+    <span class="text">Payment</span>
+  </a>
+  <ul id="payment" class="collapse dropdown-nav">
+    <li>
+      <a href="/payments/banks"> Bank </a>
+    </li>
+    <li>
+      <a href="/payments/fintechs"> Fintech </a>
+    </li>
+    <li>
+      <a href="/payments/accounts"> Account </a>
+    </li>
+    <li>
+      <a href="/payments/topup"> Topup </a>
+    </li>
+    <li>
+      <a href="/payments/transactions"> Transaction </a>
+    </li>
+  </ul>
+</li>
+
+@* Purchasing *@
+<li class="nav-item nav-item-has-children">
+  <a href="#0"
+     class="collapsed"
+     data-bs-toggle="collapse"
+     data-bs-target="#purchasing"
+     aria-controls="purchasing"
+     aria-expanded="false"
+     aria-label="Toggle navigation">
+    <span class="icon">
+      <i class="mdi mdi-dolly"></i>
+    </span>
+    <span class="text">Purchasing</span>
+  </a>
+  <ul id="purchasing" class="collapse dropdown-nav">
+    <li>
+      <NavLink class="nav-link" href="/purchasing/gallery">Gallery</NavLink>
+    </li>
+    <li>
+      <NavLink class="nav-link" href="/purchasing/vendor">Vendor</NavLink>
+    </li>
+    <li>
+      <NavLink class="nav-link" href="/purchasing/stocks">Stock</NavLink>
+    </li>
+    <li>
+      <NavLink class="nav-link" href="/purchasing/list-order">Purchase Order</NavLink>
+    </li>
+  </ul>
+</li>
+</ul>
+</nav>
 </aside>
 <div class="overlay @(IsOpen ? "active" : "")" @onclick="ToggleSidebar">
 
@@ -275,16 +332,16 @@
 
 @code {
 
-    [Parameter]
-    public bool IsOpen { get; set; }
+  [Parameter]
+  public bool IsOpen { get; set; }
 
-    [Parameter]
-    public EventCallback<bool> OnIsOpenChanged { get; set; }
+  [Parameter]
+  public EventCallback<bool> OnIsOpenChanged { get; set; }
 
-    private async Task ToggleSidebar()
-    {
-        IsOpen = !IsOpen;
-        await OnIsOpenChanged.InvokeAsync(IsOpen);
-    }
+  private async Task ToggleSidebar()
+  {
+    IsOpen = !IsOpen;
+    await OnIsOpenChanged.InvokeAsync(IsOpen);
+  }
 
 }

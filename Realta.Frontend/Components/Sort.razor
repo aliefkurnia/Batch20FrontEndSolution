@@ -1,7 +1,16 @@
 <section>
-  <select name="" id="" class="form-control" @onchange="ApplySort">
-    <option value="-1">--Order By--</option>
-    <option value="PoheNumber">PO Number</option>
-    <option value="VendorName">Vendor Name</option>
-  </select>
+    <select name="" id="" class="form-control" @onchange="ApplySort">
+        <option value="-1">--Order By--</option>
+        <option value="PoheNumber">PO Number</option>
+        <option value="VendorName">Vendor Name</option>
+    </select>
 </section>
+
+<sectionVenddor>
+    <select class="form-control" @onchange="ApplySort">
+        <option value="-1">Order By Name</option>
+        <option value="vendorName"> A - Z
+        </option>
+        <option value="vendorName desc">Z - A</option>
+    </select>
+</sectionVenddor>

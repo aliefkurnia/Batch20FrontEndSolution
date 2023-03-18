@@ -1,4 +1,4 @@
-﻿@page "/accounts"
+﻿@page "/payments/accounts"
 
 <section class="table-components">
     <div class="container-fluid">
@@ -36,10 +36,17 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card-style mb-30">
-                        <h6 class="mb-10">Daftar Account</h6>
-                        <p class="text-sm mb-20">
-                            Informasi tentang daftar account.
-                        </p>
+                        <div class="dataTable-top">
+                            <div class="dataTable-dropdown mb-20">
+                                <h6 class="mb-10">Daftar Account</h6>
+                                <p class="text-sm">
+                                    Informasi tentang daftar account.
+                                </p>
+                            </div>
+                            <div class="dataTable-search">
+                                <input class="dataTable-input" placeholder="Search..." type="text">
+                            </div>
+                        </div>
                         <div class="table-wrapper table-responsive">
                             <table class="table">
                                 <thead>
@@ -95,6 +102,50 @@
                                 </tbody>
                             </table>
                             <!-- end table -->
+                        </div>
+                        <div class="dataTable-bottom">
+                            @* <div class="dataTable-info">Showing 1 to 10 of 100 entries</div> *@
+                            <div class="dataTable-dropdown">
+                                <label>
+                                    <select class="dataTable-selector">
+                                        <option value="5">5</option><option value="10" selected="">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option>
+                                    </select> entries per page
+                                </label>
+                            </div>
+                            <nav class="dataTable-pagination">
+                                <ul class="dataTable-pagination-list">
+                                    <li class="active">
+                                        <a href="#" data-page="1">1</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#" data-page="2">2</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#" data-page="3">3</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#" data-page="4">4</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#" data-page="5">5</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#" data-page="6">6</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#" data-page="7">7</a>
+                                    </li>
+                                    <li class="ellipsis">
+                                        <a href="#">…</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#" data-page="10">10</a>
+                                    </li>
+                                    <li class="pager">
+                                        <a href="#" data-page="2">›</a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                     <!-- end card -->

@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Realta.Contract.Models;
+using Realta.Domain.RequestFeatures;
+using Realta.Frontend.HttpRepository.Purchasing;
 using System.ComponentModel;
 
 namespace Realta.Frontend.Pages.Purchasing
@@ -7,77 +10,42 @@ namespace Realta.Frontend.Pages.Purchasing
     {
         [Parameter] public int Id { get; set; }
 
-        public List<StocksDetailDummy> stocksDetailList { get; set; }
+        [Inject] public IStockDetailHttpRepository StockDetailHttpRepository { get; set;}
+        public MetaData MetaData { get; set; } = new MetaData();
+        public List<StockDetailDto> stocksDetailList { get; set; }
 
-        protected override void OnInitialized()
+        public StockDetailParameters _stockDetailParameters = new StockDetailParameters();
+
+        protected async override Task OnInitializedAsync()
         {
-            stocksDetailList = new List<StocksDetailDummy>
-            {
-                new StocksDetailDummy
-                {
-                    StodId = 1,
-                    StockName = "Bantal",
-                    StodBarcodeNumber = "BC123123139912",
-                    StodStatus = "1 ",
-                    StodPoNumber = "PO-001",
-                },
-                new StocksDetailDummy
-                {
-                    StodId = 2,
-                    StockName = "Bantal",
-                    StodBarcodeNumber = "BC123123139913",
-                    StodStatus = "1 ",
-                    StodPoNumber = "PO-001",
-                },
-                new StocksDetailDummy
-                {
-                    StodId = 3,
-                    StockName = "Bantal",
-                    StodBarcodeNumber = "BC123123139914",
-                    StodNotes = "Kamar 03",
-                    StodStatus = "2 ",
-                    StodPoNumber = "PO-001",
-                    FaciRoomNumber = "ROOM 1"
-                },
-                new StocksDetailDummy
-                {
-                    StodId = 3,
-                    StockName = "Bantal",
-                    StodBarcodeNumber = "BC123123139915",
-                    StodStatus = "3 ",
-                    StodPoNumber = "PO-001",
-                },
-                new StocksDetailDummy
-                {
-                    StodId = 4,
-                    StockName = "Bantal",
-                    StodBarcodeNumber = "BC123123139916",
-                    StodStatus = "4 ",
-                    StodPoNumber = "PO-001",
-                },
-                new StocksDetailDummy
-                {
-                    StodId = 5,
-                    StockName = "Bantal",
-                    StodBarcodeNumber = "BC123123139917",
-                    StodNotes = "Kamar 06",
-                    StodStatus = "2 ",
-                    StodPoNumber = "PO-001",
-                    FaciRoomNumber = "ROOM 2"
-                }
-            };
+           
+            await GetPaging();
         }
 
+        private async Task SelectedPage(int page)
+        {
+            _stockDetailParameters.PageNumber = page;
+            await GetPaging();
+        }
+        private async Task GetPaging()
+        {
+            _stockDetailParameters.StockId = Id;
+
+            var response = await StockDetailHttpRepository.GetStockDetailPaging(_stockDetailParameters);
+            stocksDetailList = response.Items;
+            MetaData = response.MetaData;
+        }
+
+        public static (string, string) GetStatus(int status)
+        {
+            return status switch
+            {
+                1 => ("warning-btn", "Stocked"),
+                2 => ("info-btn", "Used"),
+                3 => ("danger-btn", "Broken"),
+                4 => ("dark-btn", "Complete")
+            };
+        }
     }
 
-    public class StocksDetailDummy
-    {
-        public int? StodId { get; set; }
-        public string? StockName { get; set; }
-        public string? StodBarcodeNumber { get; set; }
-        public string? StodStatus { get; set; }
-        public string? StodNotes { get; set; }
-        public string? FaciRoomNumber { get; set; }
-        public string? StodPoNumber { get; set; }
-    }
 }

@@ -1,20 +1,25 @@
 ﻿@page "/purchasing/stocks"
+@using Realta.Domain.RequestFeatures
+@using Realta.Frontend.Components.Purchasing
 
 <TableSection Title="Stocks"
               Link="/purchasing"
               LinkText="Purchasing">
   <CustomComponent>
-    <div class="d-flex align-items-center">
+    <div class="d-flex justify-content-end">
       <div class="select-style-1 mb-0 ml-10">
         <div class="select-position">
-          <select class="p-0 pe-5 border-0">
-            <option value="1" selected>High</option>
-            <option value="1">Lowest</option>
+          <select class="p-0 pe-5 border-0" @onchange="applySort">
+            <option value="stockName asc" selected>High</option>
+            <option value="stockName desc">Lowest</option>
           </select>
         </div>
       </div>
     </div>
   </CustomComponent>
+  <Topbar>
+        <TableToolbar Placeholder="Stock Name" OnSearchChanged="SearchChange" />
+  </Topbar>
   <Thead>
     <tr>
       <th class="min-width">
@@ -37,7 +42,7 @@
       </th>
       <th>
         <h6>
-            <button style="border: 0; background-color: transparent;" data-bs-toggle="modal" data-bs-target="#createStock">
+            <button style="border: 0; background-color: transparent;" @onclick="(() => _createStock.Show())">
                 <b>+ Add</b>
             </button>
          </h6>
@@ -74,13 +79,13 @@
                   </button>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction">
                     <li class="dropdown-item">
-                      <a class="text-gray" data-bs-toggle="modal" data-bs-target="#editStock">Edit</a>
+                        <a class="text-gray" @onclick="(() => UpdateStock(so.StockId.Value))">Edit</a>
                     </li>
                     <li class="dropdown-item">
-                      <a class="text-gray" href="#" data-bs-toggle="modal" data-bs-target="#uploadFotoStock">Upload Foto</a>
+                      <a class="text-gray" data-bs-toggle="modal" data-bs-target="#uploadFotoStock[@so.StockId.Value]">Upload Foto</a>
                     </li>
                     <li class="dropdown-item">
-                      <a class="text-danger" href="#" data-bs-toggle="modal" data-bs-target="#">Delete</a>
+                                <a class="text-danger" @onclick="()=> onDelete(so.StockId.Value)">Delete</a>
                     </li>
                     <li class="dropdown-item">
                       <a class="text-gray" href="/purchasing/stock/@so.StockId">Detail Stock</a>
@@ -88,190 +93,23 @@
                   </ul>
                 </td>
               </tr>
+                                  
         }
-    }
+        }
   </Tbody>
+  <Page>    
+        <Paging MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+  </Page>
 </TableSection>
 
-@* // Update Modal *@
-<div class="warning-modal">
-    <div class="modal fade" id="editStock" tabindex="-1" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <form class="modal-content card-style" action="" method="post">
-        <div class="modal-header px-0 border-0">
-          <h5 class="text-bold">Edit Stock</h5>
-          <button type="button" class="border-0 bg-transparent h1" data-bs-dismiss="modal">
-            <i class="lni lni-cross-circle"></i>
-          </button>
-        </div>
-        <div class="modal-body px-0">
-          <div class="content mb-20">
-            <div class="row">
-                <div class="col-8">
-                    <div class="input-style-1">
-                        <label>Stock</label>
-                        <input type="text">
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="input-style-1">
-                        <label>Re-Order Point</label>
-                        <input type="number">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <div class="input-style-1">
-                        <label>Quantity</label>
-                        <input type="number">
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="input-style-1">
-                        <label>Used</label>
-                        <input type="number">
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="input-style-1">
-                         <label>Scrap</label>
-                         <input type="number">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="input-style-1">
-                        <label>Size</label>
-                        <input type="text">
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="input-style-1">
-                        <label>Color</label>
-                        <input type="text">
-                    </div>
-                </div>
-            </div>
-          </div>
-          <div class="action d-flex flex-wrap justify-content-end">
-            <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
-              Cancel
-            </button>
-            <button type="submit" data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1">
-              Send
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-@* // Create Modal *@
-<div class="warning-modal">
-    <div class="modal fade" id="createStock" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <form class="modal-content card-style" action="/update" method="post">
-                <div class="modal-header px-0 border-0">
-                    <h5 class="text-bold">Add Stock</h5>
-                    <button type="button" class="border-0 bg-transparent h1" data-bs-dismiss="modal">
-                        <i class="lni lni-cross-circle"></i>
-                    </button>
-                </div>
-                <div class="modal-body px-0">
-                    <div class="content mb-20">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="input-style-1">
-                                    <label>Stock</label>
-                                    <input type="text">
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="input-style-1">
-                                    <label>Re-Order Point</label>
-                                    <input type="number">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="input-style-1">
-                                    <label>Quantity</label>
-                                    <input type="number">
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="input-style-1">
-                                    <label>Used</label>
-                                    <input type="number">
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="input-style-1">
-                                    <label>Scrap</label>
-                                    <input type="number">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="input-style-1">
-                                    <label>Size</label>
-                                    <input type="text">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="input-style-1">
-                                    <label>Color</label>
-                                    <input type="text">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="action d-flex flex-wrap justify-content-end">
-                        <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
-                            Cancel
-                        </button>
-                        <button type="submit" data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1">
-                            Send
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+@* // Edit Stock Modal *@
+<ModalUpdateStock @ref="_updateStock" getPaging="GetPaging" UpdateStock="GetUpdateStock" />
 
 @* // Upload Foto Modal *@
-<div class="warning-modal">
-    <div class="modal fade" id="uploadFotoStock" tabindex="-1" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <form class="modal-content card-style" action="" method="post">
-                <div class="modal-header px-0 border-0">
-                    <h5 class="text-bold">Stock : Bantal</h5>
-                    <button type="button" class="border-0 bg-transparent h1" data-bs-dismiss="modal">
-                        <i class="lni lni-cross-circle"></i>
-                    </button>
-                </div>
-                <div class="modal-body px-0">
-                    <div class="content mb-20">
-                            
-                    </div>
-                    <div class="action d-flex flex-wrap justify-content-end">
-                        <button type="button" data-bs-dismiss="modal" class="main-btn danger-btn-outline btn-hover m-1">
-                            Cancel
-                        </button>
-                        <button type="submit" data-bs-dismiss="modal" class="main-btn primary-btn btn-hover m-1">
-                            Send
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<ModalUploadFotoStock PhotoList="stocksPhotoList" />
 
-<DeleteModal Target="#delete"/>
+@* // Create Stock Modal *@
+<ModalCreateStock @ref="_createStock" getPaging="GetPaging" />
+
+@* // Delete Stock Modal *@
+<DeleteModal Target="#delete" />

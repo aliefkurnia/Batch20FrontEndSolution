@@ -22,7 +22,8 @@
                         <td>
                             <div class="lead">
                                 <div class="check-input-primary">
-                                    <input class="form-check-input" type="radio" name="flexRadioProvinces" id="flexRadioDefault1">
+                                    <input class="form-check-input" type="radio" name="flexRadioProvinces" id="flexRadioDefault1"
+                                           value="@provinces.ProvId" @onclick="() => SelectProvinces(provinces.ProvId)">
                                 </div>
                                 <div class="lead-text ml-10">
                                     <p>@provinces.ProvId</p>
@@ -39,10 +40,10 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction">
                                 <li class="dropdown-item">
-                                    <a class="text-gray" href="list-order/PO-20230303-001">Edit</a>
+                                    <a class="text-gray" @onclick="() => RedirectToUpdate(provinces.ProvId)">Edit</a>
                                 </li>
                                 <li class="dropdown-item">
-                                    <a class="text-danger" href="#" data-bs-toggle="modal" data-bs-target="#@($"delete")">Delete</a>
+                                    <a class="text-danger" @onclick="() => Delete(provinces.ProvId)">Delete</a>
                                 </li>
                             </ul>
                         </td>

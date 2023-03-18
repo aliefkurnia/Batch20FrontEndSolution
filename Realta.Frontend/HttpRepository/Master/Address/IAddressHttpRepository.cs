@@ -9,5 +9,11 @@ namespace Realta.Frontend.HttpRepository.Master
         Task<List<AddressDto>> GetAddress();
 
         Task<PagingResponse<AddressDto>> GetAddressPaging(AddressParameter addressParameter);
+        
+        Task CreateAddress(AddressCreateDto addressCreateDto);
+        Task UpdateAddress(AddressDto addressDto);
+        Task<AddressDto> GetAddressById(int id);
+
+        Task deleteAddress(int id);
     }
 }

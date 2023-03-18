@@ -1,5 +1,6 @@
 ﻿using Realta.Contract.Models;
 using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Text.Json;
 using Realta.Domain.RequestFeatures;
 using Realta.Frontend.Features;
@@ -35,6 +36,20 @@ namespace Realta.Frontend.HttpRepository.Master.CategoryGroup
             return cagro;
         }
 
+        public async Task<List<PolicyDto>> GetPolicy()
+        {
+            var response = await _httpClient.GetAsync("policy");
+            var content = await response.Content.ReadAsStringAsync();
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(content);
+            }
+
+            var policy = JsonSerializer.Deserialize <List<PolicyDto>>(content, _options);
+            return policy;
+        }
+
         public async Task<PagingResponse<CategoryGroupDto>> GetCategoryGroupPaging(CategoryGroupParameter categoryGroupParameter)
         {
             var queryStringParam = new Dictionary<string, string>
@@ -59,6 +74,64 @@ namespace Realta.Frontend.HttpRepository.Master.CategoryGroup
             };
             Console.WriteLine(pagingRespone.Items);
             return pagingRespone;
+        }
+
+        public async Task CreateCategoryGroup(CategoryGroupCreateDto categoryGroupCreateDto)
+        {
+            var content = JsonSerializer.Serialize(categoryGroupCreateDto);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            var postResult = await _httpClient.PostAsync("categorygroup", bodyContent);
+            var postContent = await postResult.Content.ReadAsStringAsync();
+
+            if (!postResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(postContent);
+            }        
+        }
+
+        public async Task UpdateCategoryGroup(CategoryGroupDto categoryGroupDto)
+        {
+            var content = JsonSerializer.Serialize(categoryGroupDto);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var url = Path.Combine("servicetask", categoryGroupDto.CagroId.ToString());
+
+            var postResult = await _httpClient.PutAsync(url, bodyContent);
+            var postContent = await postResult.Content.ReadAsStringAsync();
+
+
+            if (!postResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(postContent);
+            }
+        }
+
+        public async Task<CategoryGroupDto> GetCategoryGroupById(int id)
+        {
+            var url = Path.Combine("categorygroup", id.ToString());
+
+            var response = await _httpClient.GetAsync(url);
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(content);
+            }
+
+            var cagro = JsonSerializer.Deserialize<CategoryGroupDto>(content, _options);
+            return cagro;
+        }
+
+        public async Task deleteCategoryGroup(int id)
+        {
+            var url = Path.Combine("categorygroup", id.ToString());
+
+            var deleteResult = await _httpClient.DeleteAsync(url);
+            var deleteContent = await deleteResult.Content.ReadAsStringAsync();
+
+            if (!deleteResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(deleteContent);
+            }
         }
     }
 }

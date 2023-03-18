@@ -58,7 +58,7 @@
                             <a class="text-gray" data-bs-toogle="modal" data-bs-target="#editmodal">Edit</a>
                         </li>
                         <li class="dropdown-item">
-                            <a class="text-danger" href="#" data-bs-toggle="modal" data-bs-target="#@($"delete{categorygroup}")">Delete</a>
+                            <a class="text-danger" @onclick="() => Delete(categorygroup.CagroId)">Delete</a>
                         </li>
                     </ul>
                 </td>
